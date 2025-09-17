@@ -1,0 +1,36 @@
+{
+  "name": "3m-found-extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "watch": "esbuild src/pages/index.tsx --bundle --outfile=content.bundle.js --minify --platform=browser --format=iife --global-name=mfound --inject:./esbuild.react-shim.js --watch",
+    "dev-server": "node dev-server.js",
+    "dev": "npm-run-all --parallel watch dev-server"
+  },
+  "dependencies": {
+    "@radix-ui/themes": "^3.2.1",
+    "@tanstack/react-query": "^5.86.0",
+    "axios": "^1.11.0",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.541.0",
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-markdown": "^10.1.0",
+    "react-zoom-pan-pinch": "^3.7.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.25.9",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5",
+    "ws": "^8.18.3"
+  }
+}
