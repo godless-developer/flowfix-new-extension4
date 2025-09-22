@@ -1,15 +1,22 @@
 import React, { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Tasks, Feedback, Office, Settings } from "@/components";
+import { Tasks, Office, Settings } from "@/components";
 import Question from "../../components/message/Question";
 import { useUser } from "@/provider/userProvider";
 import { IMessage } from "@/components/message/components";
 import { SquarePen } from "lucide-react";
 
-type TabKey = "answer" | "tasks" | "feedback" | "office" | "settings";
+type TabKey = "answer" | "tasks" | "office" | "settings";
 
-export function GeneralTab({ shadow }: { shadow: any }) {
+export function GeneralTab({
+  shadow,
+  setNotification,
+}: {
+  shadow: any;
+  setNotification: any;
+}) {
   const { user } = useUser();
+  console.log(user);
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   const tabs: { key: TabKey; label: string; content: React.ReactNode }[] = [
@@ -27,12 +34,9 @@ export function GeneralTab({ shadow }: { shadow: any }) {
     {
       key: "tasks",
       label: "Хийх зүйлс",
-      content: <Tasks user={user} shadow={shadow} />,
-    },
-    {
-      key: "feedback",
-      label: "Санал хүсэлт",
-      content: <Feedback user={user} shadow={shadow} />,
+      content: (
+        <Tasks user={user} shadow={shadow} setNotification={setNotification} />
+      ),
     },
     { key: "office", label: "Оффис", content: <Office user={user} /> },
     {
@@ -70,7 +74,6 @@ export function GeneralTab({ shadow }: { shadow: any }) {
       color: "white",
       flexDirection: "column" as const,
       gap: "8px",
-      fontFamily: "Inter important!",
     },
     tablistWrap: {
       width: "100%",
@@ -82,7 +85,7 @@ export function GeneralTab({ shadow }: { shadow: any }) {
     },
     tablist: {
       display: "flex",
-      backgroundColor: "#3c3c3cff",
+      backgroundColor: "#F5F5F5",
       borderRadius: "999px",
       gap: "8px",
       alignItems: "center",
@@ -90,13 +93,11 @@ export function GeneralTab({ shadow }: { shadow: any }) {
       position: "relative" as "relative",
     },
     tab: (selected: boolean): React.CSSProperties => ({
-      fontFamily: "Inter important!",
       appearance: "none",
       border: "none",
-      background: selected
-        ? "linear-gradient(to right, #9747FF, #6091BD)"
-        : "transparent",
-      color: "#fff",
+      background: selected ? "#fff" : "transparent",
+      color: "#000",
+      fontFamily: "SF Pro",
       padding: "8px 12px",
       borderRadius: "999px",
       cursor: "pointer",
@@ -104,14 +105,10 @@ export function GeneralTab({ shadow }: { shadow: any }) {
       fontWeight: 500,
       outline: "none",
       position: "relative",
-      // boxShadow: selected
-      //   ? "0px 0px 3px 3px rgba(255, 255, 255, 0.58), 0 4px 6px rgba(0,0,0,0.1)"
-      //   : "none",
     }),
     panel: {
       height: "100%",
       borderRadius: "16px",
-      fontFamily: "Inter",
       fontSize: 14,
       color: "#ffffffff",
       paddingTop: "15px",

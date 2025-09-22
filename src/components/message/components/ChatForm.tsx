@@ -42,7 +42,7 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
           position: "relative",
           display: "flex",
           alignItems: "center",
-          backgroundColor: "#1B202F",
+          backgroundColor: "#F5F5F5",
           borderRadius: "22px",
           padding: "12px 45px 12px 40px",
         }}
@@ -74,7 +74,6 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
             minHeight: "24px",
             maxHeight: "100px",
             backgroundColor: "transparent",
-            fontFamily: "Inter important!",
             color: "white",
             border: "none",
             outline: "none",

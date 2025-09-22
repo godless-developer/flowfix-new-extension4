@@ -121,8 +121,6 @@ export function Intro({ onFinish }: { onFinish: () => void }) {
         borderColor: "#c6c6c6",
         border: "1px solid #c6c6c6",
         borderRadius: "24px",
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         padding: "24px 32px",
         animation:
           animationState === "enter"
@@ -218,13 +216,12 @@ export function Intro({ onFinish }: { onFinish: () => void }) {
                     justifyContent: "center",
                     fontSize: "24px",
                     fontWeight: 700,
-                    fontFamily: "Inter , sans-serif",
                     marginBottom: "20px",
                   }}
                 >
                   {item.number}
                 </div>
-                <div style={{ marginBottom: "16px", fontFamily: "SF Pro" }}>
+                <div style={{ marginBottom: "16px" }}>
                   <strong
                     style={{
                       fontSize: "16px",

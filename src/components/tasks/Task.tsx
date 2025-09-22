@@ -1,106 +1,105 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { useEffect, useState } from "react";
-import { completeTask, getTasks } from "@/api/tasks-context";
-import { TasksView } from "./components";
+import React, { useEffect, useState } from "react";
+import { useUser } from "@/provider/userProvider";
+import MiniDateCalendar from "./components/MiniDateCalendar";
 
-declare const chrome: any;
-interface TasksProps {
+export function Tasks({
+  user,
+  setNotification,
+  shadow,
+}: {
   user: any;
+  setNotification: any;
   shadow: any;
-}
+}) {
+  const { createTask } = useUser();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [time, setTime] = useState("");
+  const [title, setTitle] = useState("");
 
-export function Tasks({ shadow, user }: TasksProps) {
-  const [showCongrats, setShowCongrats] = useState(false);
-  const [taskItems, setTaskItems] = useState<any[]>([]);
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const tasks = await getTasks({ userId: user._id });
-      const taskData = tasks.data.map((t: any) => ({
-        ...t,
-      }));
-
-      setTaskItems(taskData);
-    };
-    fetchTasks();
-  }, []);
-  useEffect(() => {
-    const onboardingTasks = taskItems.filter((t) => t.type === "onboarding");
-    const completedOnboarding = onboardingTasks.filter((t) => t.checked).length;
-    if (
-      onboardingTasks.length > 0 &&
-      completedOnboarding === onboardingTasks.length
-    ) {
-      chrome.storage.local.get(["popup"], (res: { popup: boolean }) => {
-        if (res.popup !== false) {
-          setShowCongrats(true);
-          chrome.storage.local.set({
-            popup: false,
-          });
-          const timer = setTimeout(() => {
-            setShowCongrats(false);
-          }, 5000);
-          return () => clearTimeout(timer);
-        }
-      });
+  const handleAddTask = async () => {
+    if (!selectedDate || !time || !title.trim()) {
+      alert("Бүх талбарыг бөглөнө үү!");
+      return;
     }
-  }, [taskItems]);
 
-  const toggleTask = async (_id: string) => {
-    try {
-      setTaskItems((prev) =>
-        prev.map((task) =>
-          task._id === _id ? { ...task, checked: !task.checked } : task
-        )
-      );
+    const [hours, minutes] = time.split(":").map(Number);
+    const datetime = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate(),
+      hours,
+      minutes
+    );
 
-      await completeTask(user._id, _id);
-
-      shadow.showToast("Амжилттай бүртгэгдлээ", {
-        title: "Task completed!",
-        type: "success",
-        duration: 2000,
-      });
-    } catch (error: any) {
-      shadow.showToast("Аль хэдийн бүртгэгдсэн task байна", {
-        title: "Warning!",
-        type: "info",
-        duration: 3000,
-      });
+    const success = await createTask(title, datetime.toISOString());
+    if (success) {
+      setTitle("");
+      setTime("");
     }
   };
 
-  const handleClaim = () => {
-    const onboardingTasks = taskItems.filter((t) => t.type === "onboarding");
-    const completedOnboarding = onboardingTasks.filter((t) => t.checked).length;
+  // ⏰ Notification system
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!user?.tasks) return;
+      const now = new Date();
 
-    if (
-      onboardingTasks.length > 0 &&
-      completedOnboarding === onboardingTasks.length
-    ) {
-      setShowCongrats(false);
-      shadow.showToast("Open Your Settings!", {
-        title: "Avatar claimed!",
-        type: "success",
-        duration: 3000,
+      const dueTask = user.tasks.find((task: any) => {
+        const taskTime = new Date(task.datetime);
+        const diff = taskTime.getTime() - now.getTime();
+        console.log(task.title, diff, "taskss");
+        return diff < 60 * 1000;
       });
-    } else {
-      shadow.showToast("Complete all OnBoarding tasks first!", {
-        title: "Not yet!",
-        type: "warning",
-        duration: 3000,
-      });
-    }
-  };
+
+      if (dueTask) {
+        setNotification(dueTask);
+
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
+      }
+      console.log(dueTask, "tasks");
+    }, 30 * 1000);
+
+    return () => clearInterval(interval);
+  }, [user?.tasks]);
 
   return (
-    <TasksView
-      taskItems={taskItems}
-      showCongrats={showCongrats}
-      onToggle={toggleTask}
-      onClaim={handleClaim}
-      onCloseCongrats={() => setShowCongrats(false)}
-    />
+    <div
+      style={{ display: "flex", gap: "40px", padding: "20px", color: "#000" }}
+    >
+      <MiniDateCalendar value={selectedDate} onChange={setSelectedDate} />
+
+      <div style={{ flex: 1 }}>
+        <h3>Хийх зүйлс:</h3>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <input
+            type="text"
+            placeholder="Жишээ: Багийн уулзалт төлөвлөх"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <input
+            placeholder="tsag min"
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+          <button onClick={handleAddTask}>+</button>
+        </div>
+
+        <ul style={{ marginTop: "20px" }}>
+          {user?.tasks?.map((task: any) => (
+            <li key={task._id}>
+              {task.title}{" "}
+              <span style={{ color: "#666", fontSize: "12px" }}>
+                {new Date(task.datetime).toLocaleString()}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

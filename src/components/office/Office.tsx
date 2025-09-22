@@ -55,7 +55,7 @@ export function Office({ user }: { user: any }) {
               wrapperClass="!w-full !h-full"
               contentClass="!flex !justify-center !items-center"
             >
-              <OfficeContent user={user} />
+              <OfficeContent />
             </TransformComponent>
             <StatusLegend />
           </>

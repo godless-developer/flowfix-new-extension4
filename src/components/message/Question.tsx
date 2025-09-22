@@ -119,10 +119,10 @@ export default function Question({
         height: "100%",
         width: "100%",
         boxSizing: "border-box",
-        fontFamily: "Inter,Inter, sans-serif",
         borderRadius: "8px",
         overflow: "hidden",
         position: "relative",
+        color: "white",
       }}
     >
       {showDefaultQuestions && (
@@ -146,9 +146,8 @@ export default function Question({
                 borderRadius: "20px",
                 border: "1px solid #9747FF",
                 background: "transparent",
-                color: "white",
+                color: "black",
                 cursor: "pointer",
-                fontFamily: "Inter important!",
                 fontSize: 14,
               }}
             >

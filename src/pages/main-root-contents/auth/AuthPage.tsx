@@ -34,7 +34,6 @@ export function AuthPage({
         justifyContent: "center",
         height: "100%",
         color: "black",
-        fontFamily: "monospace",
         textAlign: "center",
         gap: 12,
       }}
@@ -62,6 +61,20 @@ export function AuthPage({
           </motion.div>
         )}
       </AnimatePresence>
+      <p
+        style={{
+          fontSize: "11px",
+          color: "#666666ff",
+          fontWeight: "bold",
+          marginTop: "50px",
+          whiteSpace: "pre-line",
+          position: "absolute",
+          left: "34%",
+          bottom: "25px",
+        }}
+      >
+        Powered by FlowFix {"\n"}Copyright © 2025 FlowFix. All rights reserved.
+      </p>
     </div>
   );
 }

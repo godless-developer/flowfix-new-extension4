@@ -70,7 +70,7 @@ const defaultChairs: Chair[] = [
   { id: "chair-41", x: 575, y: 280, type: "spec1" },
 ];
 
-export function OfficeContent({ user }: { user: any }) {
+export function OfficeContent() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [chairs, setChairs] = useState<Chair[]>([]);
   const [occupied, setOccupied] = useState<{
@@ -78,7 +78,7 @@ export function OfficeContent({ user }: { user: any }) {
   }>({});
   const [selectedChair, setSelectedChair] = useState<string | null>(null);
 
-  const currentUserId = user._id;
+  const currentUserId = "wsefsfse";
 
   const fetchUsers = async () => {
     const users = await getAllUsers();
@@ -96,7 +96,7 @@ export function OfficeContent({ user }: { user: any }) {
 
   useEffect(() => {
     fetchUsers();
-  }, [user]);
+  }, ["sfksfjs"]);
 
   useEffect(() => {
     const userChairs: Chair[] = allUsers

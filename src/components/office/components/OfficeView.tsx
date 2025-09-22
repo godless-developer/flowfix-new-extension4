@@ -213,7 +213,6 @@ export function OfficeView({
                       padding: "3px 8px",
                       cursor: "pointer",
                       fontSize: "8px",
-                      fontFamily: "Inter",
                     }}
                     onClick={() => onSit(coord.id)}
                   >

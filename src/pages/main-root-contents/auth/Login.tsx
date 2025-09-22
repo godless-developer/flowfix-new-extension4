@@ -31,18 +31,7 @@ export function Login({
       >
         Нэвтрэх
       </h2>
-      <p
-        style={{
-          fontWeight: "normal",
-          color: "#00000066",
-          fontSize: "14px",
-          whiteSpace: "pre-line",
-          textAlign: "center",
-          margin: 0,
-        }}
-      >
-        Та нэвтрэхийн тулд {"\n"} өөрийн бүртгэл ашиглана уу
-      </p>
+
       <div
         id="mock-login-btn"
         style={{
@@ -56,6 +45,7 @@ export function Login({
           backgroundColor: "#f6f6f6",
           border: "0.5px solid #e0e0e0",
           fontSize: "14px",
+          textAlign: "center",
           outline: "none",
           gap: "8px",
           cursor: "pointer",
@@ -73,11 +63,12 @@ export function Login({
         <p
           style={{
             fontSize: 14,
+            paddingTop: 3,
             color: "#00000099",
             margin: 0,
           }}
         >
-          Google бүртгэл ашиглах
+          Google-ээр нэвтрэх
         </p>
       </div>
       <p style={{ fontSize: "14px", color: "#00000099", margin: 0 }}>эсвэл</p>
@@ -118,7 +109,6 @@ export function Login({
           width: "140px",
           marginTop: "16px",
           padding: "10px 16px",
-          fontFamily: "monospace",
           fontSize: "16px",
           cursor: "pointer",
           boxShadow: "-3px -3px 4px 0px #00000040 inset",
@@ -138,18 +128,6 @@ export function Login({
         onClick={pageswitch}
       >
         Бүртгүүлэх
-      </p>
-      <p
-        style={{
-          fontSize: "11px",
-          color: "#666666ff",
-          fontWeight: "bold",
-          marginTop: "50px",
-          whiteSpace: "pre-line",
-          textAlign: "center",
-        }}
-      >
-        Powered by FlowFix {"\n"}Copyright © 2025 FlowFix. All rights reserved.
       </p>
     </div>
   );

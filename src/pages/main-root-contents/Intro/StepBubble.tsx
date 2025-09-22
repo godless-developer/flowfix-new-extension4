@@ -17,6 +17,8 @@ export const StepBubble = ({
       border: "1px solid #ddd",
       borderRadius: "16px",
       padding: "16px 20px",
+      justifyContent: "center",
+      alignItems: "center",
       display: "inline-block",
       marginBottom: "16px",
       backgroundColor: "white",
@@ -42,9 +44,8 @@ export const StepBubble = ({
         fontSize: "16px",
         fontWeight: 400,
         color: "#000000",
-        margin: 0,
+        margin: "10px 0px ",
         textAlign: "center",
-        fontFamily: "monospace",
       }}
     >
       {text}

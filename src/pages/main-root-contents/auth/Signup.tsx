@@ -1,5 +1,5 @@
 import React from "react";
-
+declare const chrome: any;
 export function Signup({ onswitch }: { onswitch: () => void }) {
   return (
     <div
@@ -37,12 +37,18 @@ export function Signup({ onswitch }: { onswitch: () => void }) {
         style={{
           width: "340px",
           padding: "12px 20px",
-          marginTop: "30px",
+          marginTop: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
           borderRadius: "24px",
           backgroundColor: "#f6f6f6",
           border: "0.5px solid #e0e0e0",
           fontSize: "14px",
+          textAlign: "center",
           outline: "none",
+          gap: "8px",
+          cursor: "pointer",
           transition: "transform 0.2s ease-in-out",
         }}
         onMouseEnter={(e) =>
@@ -52,9 +58,17 @@ export function Signup({ onswitch }: { onswitch: () => void }) {
           ((e.currentTarget as HTMLDivElement).style.transform = "scale(1)")
         }
       >
+        <img
+          src={chrome.runtime.getURL("public/google.png")}
+          alt="google-icon"
+          width={2000}
+          height={2000}
+          style={{ width: "20px", height: "20px" }}
+        />
         <p
           style={{
             fontSize: 14,
+            paddingTop: 3,
             color: "black",
             fontWeight: "bold",
             margin: 0,
@@ -101,7 +115,6 @@ export function Signup({ onswitch }: { onswitch: () => void }) {
           color: "white",
           width: "140px",
           padding: "10px 16px",
-          fontFamily: "monospace",
           fontSize: "16px",
           cursor: "pointer",
           boxShadow: "-3px -3px 4px 0px #00000040 inset",
@@ -120,17 +133,6 @@ export function Signup({ onswitch }: { onswitch: () => void }) {
         onClick={onswitch}
       >
         Нэвтрэх
-      </p>
-      <p
-        style={{
-          fontSize: "11px",
-          color: "#666666ff",
-          fontWeight: "bold",
-          marginTop: "50px",
-          whiteSpace: "pre-line",
-        }}
-      >
-        Powered by FlowFix {"\n"}Copyright © 2025 FlowFix. All rights reserved.
       </p>
     </div>
   );

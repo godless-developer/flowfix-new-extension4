@@ -24,7 +24,6 @@ export const Controls = ({ onNext, onSkip }: ControlsProps) => (
         textDecoration: "underline",
         fontSize: "16px",
         cursor: "pointer",
-        fontFamily: "monospace",
       }}
     >
       Алгасах
@@ -37,7 +36,6 @@ export const Controls = ({ onNext, onSkip }: ControlsProps) => (
         borderRadius: "24px",
         color: "white",
         padding: "10px 16px",
-        fontFamily: "monospace",
         fontSize: "16px",
         cursor: "pointer",
         boxShadow: "-3px -3px 4px 0px #00000040 inset",

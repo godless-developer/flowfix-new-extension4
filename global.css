@@ -1,8 +1,12 @@
-/* * {
+* {
   padding: 0;
   margin: 0;
+  line-height: normal;
 }
 
-html {
-  font-family: "Inter" !important;
-} */
+html,
+body {
+  font-family: "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif !important;
+  letter-spacing: 1px;
+}

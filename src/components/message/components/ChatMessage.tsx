@@ -199,8 +199,7 @@ export function ChatMessage({
         <div
           style={{
             backgroundColor: isUser ? "#CB3CFF" : "#1B202F",
-            color: "#fff",
-            fontFamily: "Inter, sans-serif",
+            color: "black",
             padding: isUser ? "6px 14px" : "14px",
             borderRadius: "16px",
             // whiteSpace: "pre-wrap",
@@ -316,7 +315,6 @@ export function ChatMessage({
                     padding: "2px 5px",
                     borderRadius: "4px",
                     fontSize: "13px",
-                    fontFamily: "monospace",
                     textWrap: "wrap",
                   }}
                 >

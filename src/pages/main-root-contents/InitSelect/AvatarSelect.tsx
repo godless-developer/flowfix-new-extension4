@@ -53,7 +53,6 @@ export function AvatarSelect({
         justifyContent: "center",
         height: "100%",
         gap: 20,
-        fontFamily: "Arial, sans-serif",
         animation: "fadeIn 0.4s ease",
       }}
     >
@@ -98,7 +97,6 @@ export function AvatarSelect({
             transition: "transform 0.3s ease, opacity 0.3s ease",
             transform: animating ? "scale(0.8)" : "scale(1)",
             opacity: animating ? 0.5 : 1,
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
           }}
         >
           <img
@@ -107,7 +105,7 @@ export function AvatarSelect({
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain",
               transition: "transform 0.3s ease",
             }}
           />
@@ -126,12 +124,11 @@ export function AvatarSelect({
         </button>
       </div>
 
-      {/* Input */}
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="жишээ: Buddy"
+        placeholder="Жишээ: Buddy"
         style={{
           width: "340px",
           padding: "12px 20px",
@@ -141,12 +138,10 @@ export function AvatarSelect({
           fontSize: "14px",
           outline: "none",
           textAlign: "center",
-          fontFamily: "monospace",
           transition: "box-shadow 0.2s ease",
         }}
       />
 
-      {/* Continue button */}
       <button
         onClick={handleSubmit}
         disabled={!name.trim()}
@@ -156,15 +151,14 @@ export function AvatarSelect({
           borderRadius: "24px",
           color: "white",
           padding: "10px 16px",
-          fontFamily: "monospace",
           fontSize: "16px",
-          cursor: name.trim() ? "pointer" : "not-allowed",
+          cursor: name.trim() ? "pointer" : "pointer",
           boxShadow: "-3px -3px 4px 0px #00000040 inset",
           transition: "background-color 0.3s ease, transform 0.2s",
           transform: name.trim() ? "scale(1)" : "scale(0.95)",
         }}
       >
-        Үргэлжлүүлэхhello
+        Үргэлжлүүлэх
       </button>
     </div>
   );

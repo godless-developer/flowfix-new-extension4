@@ -1,10 +1,22 @@
 import { GeneralTab } from "./main-root-contents";
 
-export default function App({ shadow }: { shadow: any }) {
-  return <MainApp shadow={shadow} />;
+export default function App({
+  shadow,
+  setNotification,
+}: {
+  shadow: any;
+  setNotification: any;
+}) {
+  return <MainApp shadow={shadow} setNotification={setNotification} />;
 }
 
-function MainApp({ shadow }: { shadow: any }) {
+function MainApp({
+  shadow,
+  setNotification,
+}: {
+  shadow: any;
+  setNotification: any;
+}) {
   return (
     <div
       style={{
@@ -16,11 +28,10 @@ function MainApp({ shadow }: { shadow: any }) {
         color: "white",
         borderRadius: "16px",
         position: "relative",
-        fontFamily: "'Inter', sans-serif",
         overflow: "hidden",
       }}
     >
-      <GeneralTab shadow={shadow} />
+      <GeneralTab shadow={shadow} setNotification={setNotification} />
     </div>
   );
 }
