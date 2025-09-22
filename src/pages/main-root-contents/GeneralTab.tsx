@@ -150,7 +150,7 @@ export function GeneralTab({
             left: "20px",
             zIndex: 10,
             padding: "7px 9px",
-            background: "linear-gradient(to right, #9747FF, #6091BD)",
+            background: "#2600FFB2",
             border: "none",
             borderRadius: "100%",
             color: "white",

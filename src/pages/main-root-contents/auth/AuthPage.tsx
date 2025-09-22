@@ -10,7 +10,7 @@ export function AuthPage({
   onLogin: () => void;
   shuudLogin: () => void;
 }) {
-  const [page, setPage] = useState<"signin" | "signup">("signup");
+  const [page, setPage] = useState<"signin" | "signup">("signin");
 
   const animationProps2 = {
     initial: { opacity: 0, x: -50 },

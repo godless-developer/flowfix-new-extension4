@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Plus, Minus, RotateCcwIcon } from "lucide-react";
-import { StatusLegend } from "./StatusLegend";
 
 type ZoomControlsProps = {
   zoomIn: () => void;
@@ -17,13 +16,13 @@ export function ZoomControls({
   style,
 }: ZoomControlsProps) {
   const buttonStyle: React.CSSProperties = {
-    padding: "8px",
+    padding: "6px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     border: "none",
     borderRadius: "999px",
-    background: "linear-gradient(to right, #9747FF, #6091BD)",
+    background: "black",
     color: "#fff",
     cursor: "pointer",
   };
@@ -33,23 +32,24 @@ export function ZoomControls({
       style={{
         textAlign: "center",
         position: "absolute",
-        top: "22px",
-        left: "80px",
+        right: "10px",
+        bottom: "40px",
         transform: "translateX(-50%)",
         zIndex: 10,
         display: "flex",
+        flexDirection: "column",
         gap: "10px",
         ...style,
       }}
     >
       <button onClick={zoomIn} style={buttonStyle}>
-        <Plus size={20} />
+        <Plus size={26} />
       </button>
       <button onClick={zoomOut} style={buttonStyle}>
-        <Minus size={20} />
+        <Minus size={26} />
       </button>
       <button onClick={resetTransform} style={buttonStyle}>
-        <RotateCcwIcon size={20} />
+        <RotateCcwIcon size={26} />
       </button>
     </div>
   );

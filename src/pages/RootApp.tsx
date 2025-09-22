@@ -66,7 +66,7 @@ export default function initExtension() {
           <Popover
             width={900}
             height={600}
-            show={step !== "trigger"}
+            show={!((step as string) === "trigger")}
             x={
               step === "main" ? (
                 <div
@@ -85,7 +85,7 @@ export default function initExtension() {
                   }}
                   onClick={() => setStep("trigger")}
                 >
-                  <X size={30} color="#9747FF" />
+                  <X size={30} color="#000" />
                 </div>
               ) : null
             }

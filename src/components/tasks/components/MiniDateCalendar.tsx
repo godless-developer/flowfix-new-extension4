@@ -213,6 +213,7 @@ function ChevronRight() {
 const styles: Record<string, React.CSSProperties> = {
   container: {
     width: 320,
+    maxHeight: 310,
     borderRadius: 16,
     border: "1px solid #0000001A",
     background: "#fff",

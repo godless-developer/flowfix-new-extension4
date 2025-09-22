@@ -66,7 +66,12 @@ export function Tasks({
 
   return (
     <div
-      style={{ display: "flex", gap: "40px", padding: "20px", color: "#000" }}
+      style={{
+        display: "flex",
+        gap: "40px",
+        padding: " 20px 40px 40px 40px ",
+        color: "#000",
+      }}
     >
       <MiniDateCalendar value={selectedDate} onChange={setSelectedDate} />
 

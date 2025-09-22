@@ -51,7 +51,7 @@ export function OfficeView({
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <img
-        src={chrome.runtime.getURL("public/officew.png")}
+        src={chrome.runtime.getURL("public/container.png")}
         alt="Office Background"
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
       />

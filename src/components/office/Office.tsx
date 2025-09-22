@@ -1,13 +1,13 @@
 import React from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { OfficeContent, ZoomControls } from "./components";
-import { StatusLegend } from "./components/StatusLegend";
+import { StatusDropdown } from "./components/StatusLegend";
 
 declare const chrome: any;
 
 export function Office({ user }: { user: any }) {
   const containerStyle: React.CSSProperties = {
-    width: "99%",
+    width: "100%",
     height: "525px",
     overflow: "hidden",
     margin: "0 auto",
@@ -18,7 +18,6 @@ export function Office({ user }: { user: any }) {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: "16px",
     border: "2px solid #3c3c3cff",
   };
 
@@ -57,7 +56,7 @@ export function Office({ user }: { user: any }) {
             >
               <OfficeContent />
             </TransformComponent>
-            <StatusLegend />
+            <StatusDropdown />
           </>
         )}
       </TransformWrapper>

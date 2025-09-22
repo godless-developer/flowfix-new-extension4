@@ -198,8 +198,8 @@ export function ChatMessage({
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
-            backgroundColor: isUser ? "#CB3CFF" : "#1B202F",
-            color: "black",
+            backgroundColor: isUser ? "#2600FFB2" : "#EFEFEF",
+            color: isUser ? "white" : "#000",
             padding: isUser ? "6px 14px" : "14px",
             borderRadius: "16px",
             // whiteSpace: "pre-wrap",

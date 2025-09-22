@@ -123,13 +123,13 @@ export default function Question({
         overflow: "hidden",
         position: "relative",
         color: "white",
+        padding: "0px 20px 20px 20px",
       }}
     >
       {showDefaultQuestions && (
         <div
           style={{
             padding: "40px 12px",
-            height: "300px",
             display: "flex",
             flexDirection: "column",
             alignItems: "start",
@@ -137,6 +137,9 @@ export default function Question({
             flexWrap: "wrap",
           }}
         >
+          <h1 style={{ color: "#7f7f7f", fontSize: "16px" }}>
+            Жишээ асуултууд:
+          </h1>
           {defaultQuestions.map((q) => (
             <button
               key={q}
@@ -144,7 +147,7 @@ export default function Question({
               style={{
                 padding: "8px 12px",
                 borderRadius: "20px",
-                border: "1px solid #9747FF",
+                border: "1px solid #0000001A",
                 background: "transparent",
                 color: "black",
                 cursor: "pointer",

@@ -58,7 +58,7 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
             color: "#aaa",
           }}
         >
-          <Search size={18} strokeWidth={2.2} />
+          <Search size={20} strokeWidth={2.2} />
         </div>
         <textarea
           ref={textareaRef}
@@ -74,7 +74,7 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
             minHeight: "24px",
             maxHeight: "100px",
             backgroundColor: "transparent",
-            color: "white",
+            color: "black",
             border: "none",
             outline: "none",
             fontSize: "14px",
@@ -92,7 +92,7 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
             position: "absolute",
             right: 10,
             bottom: 8,
-            background: "linear-gradient(to right, #9747FF, #6091BD)",
+            background: "#2600FFB2",
             width: "40px",
             height: "40px",
             borderRadius: "22px",
