@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = process.env.API_BASE_URL;
 
 export interface FeedbackPayload {
   userId: string;

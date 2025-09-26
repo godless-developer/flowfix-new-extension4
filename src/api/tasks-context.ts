@@ -2,7 +2,9 @@ import axios from "axios";
 
 export async function getTasks({ userId }: { userId: string }) {
   try {
-    const response = await axios.get(`http://localhost:4000/tasks/${userId}`);
+    const response = await axios.get(
+      `${process.env.API_BASE_URL}/tasks/${userId}`
+    );
     return response.data;
   } catch (error: any) {
     console.error(
@@ -16,7 +18,7 @@ export async function getTasks({ userId }: { userId: string }) {
 export async function completeTask(userId: string, taskId: string) {
   try {
     const response = await axios.post(
-      "http://localhost:4000/tasks/completeTask",
+      `${process.env.API_BASE_URL}/tasks/completeTask`,
       { userId, taskId }
     );
     return response.data;

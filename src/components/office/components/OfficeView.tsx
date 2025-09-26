@@ -51,9 +51,48 @@ export function OfficeView({
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <img
-        src={chrome.runtime.getURL("public/container.png")}
+        src={chrome.runtime.getURL("public/officeSetup.png")}
         alt="Office Background"
-        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        style={{
+          width: "200px",
+          objectFit: "contain",
+          position: "absolute",
+          top: -50,
+          left: -90,
+        }}
+      />
+      <img
+        src={chrome.runtime.getURL("public/officeSetup.png")}
+        alt="Office Background"
+        style={{
+          width: "200px",
+          objectFit: "contain",
+          position: "absolute",
+          top: 70,
+          left: -90,
+        }}
+      />
+      <img
+        src={chrome.runtime.getURL("public/officeSetup.png")}
+        alt="Office Background"
+        style={{
+          width: "200px",
+          objectFit: "contain",
+          position: "absolute",
+          top: -50,
+          left: 200,
+        }}
+      />
+      <img
+        src={chrome.runtime.getURL("public/officeSetup.png")}
+        alt="Office Background"
+        style={{
+          width: "200px",
+          objectFit: "contain",
+          position: "absolute",
+          top: 70,
+          left: 200,
+        }}
       />
 
       {coordinates.map((coord) => {
@@ -97,8 +136,8 @@ export function OfficeView({
                 src={chairImg}
                 alt={`${coord.type} Chair`}
                 style={{
-                  width: "15px",
-                  height: "15px",
+                  width: "30px",
+                  height: "30px",
                   cursor: "pointer",
                   transform: `rotate(${rotation})`,
                 }}

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { Popover, Trigger, InitSelect, AuthPage } from "./main-root-contents";
+import {
+  Popover,
+  Trigger,
+  InitSelect,
+  AuthPage,
+  MinimumChat,
+} from "./main-root-contents";
 import { createShadowHost, initToast } from "./utils";
 import App from "./App";
 import { Providers } from "@/provider/queryClientProvider";
@@ -27,8 +33,8 @@ export default function initExtension() {
     const [notification, setNotification] = useState<any | null>(null);
     console.log("rootapp notif", notification);
     const [step, setStep] = useState<
-      "intro" | "login" | "chooseName" | "main" | "trigger"
-    >("intro");
+      "intro" | "login" | "chooseName" | "main" | "trigger" | "mini"
+    >("mini");
 
     useEffect(() => {
       (async () => {
@@ -102,6 +108,7 @@ export default function initExtension() {
             )}
           </Popover>
         )}
+        {step === "mini" && <MinimumChat />}
 
         {step === "trigger" && (
           <Trigger

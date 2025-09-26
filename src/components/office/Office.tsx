@@ -32,16 +32,12 @@ export function Office({ user }: { user: any }) {
           step: 0.2,
         }}
         zoomAnimation={{ animationTime: 300 }}
-        minScale={1}
-        maxScale={4}
-        initialScale={2}
+        minScale={1.32}
+        maxScale={5}
+        initialScale={3} // scale багаас эхлүүлвэл илүү зөөлөн drag хийнэ
         limitToBounds={false}
-        onInit={function noRefCheck() {}}
-        initialPositionX={0}
-        initialPositionY={0}
-        centerZoomedOut={true}
         centerOnInit={true}
-        disablePadding={true}
+        centerZoomedOut={false}
       >
         {({ zoomIn, zoomOut, resetTransform }) => (
           <>

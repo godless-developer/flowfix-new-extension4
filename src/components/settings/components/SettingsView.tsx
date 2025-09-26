@@ -22,9 +22,25 @@ export function SettingsView({ user }: { user: any }) {
   const [notifReminder, setNotifReminder] = useState(true);
   const [notifTime, setNotifTime] = useState("10 мин өмнө");
 
-  const handlePrev = () =>
-    setCurrent((prev) => (prev - 1 + avatars.length) % avatars.length);
-  const handleNext = () => setCurrent((prev) => (prev + 1) % avatars.length);
+  const [animating, setAnimating] = useState(false);
+
+  const handlePrev = () => {
+    if (animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent((prev) => (prev - 1 + avatars.length) % avatars.length);
+      setAnimating(false);
+    }, 200);
+  };
+
+  const handleNext = () => {
+    if (animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % avatars.length);
+      setAnimating(false);
+    }, 200);
+  };
 
   return (
     <div
@@ -37,6 +53,7 @@ export function SettingsView({ user }: { user: any }) {
         overflow: "auto",
       }}
     >
+      {/* Avatar carousel with animation */}
       <div
         style={{
           display: "flex",
@@ -53,15 +70,31 @@ export function SettingsView({ user }: { user: any }) {
           <ChevronLeft size={32} />
         </button>
 
-        <img
-          src={chrome.runtime.getURL(avatars[current])}
-          alt="avatar"
+        <div
           style={{
             width: "140px",
             height: "140px",
-            objectFit: "contain",
+            borderRadius: "50%",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease, opacity 0.3s ease",
+            transform: animating ? "scale(0.8)" : "scale(1)",
+            opacity: animating ? 0.5 : 1,
           }}
-        />
+        >
+          <img
+            src={chrome.runtime.getURL(avatars[current])}
+            alt="avatar"
+            style={{
+              width: "90%",
+              height: "90%",
+              objectFit: "contain",
+              transition: "transform 0.3s ease",
+            }}
+          />
+        </div>
 
         <button
           onClick={handleNext}
@@ -86,6 +119,7 @@ export function SettingsView({ user }: { user: any }) {
         {buddyName}
       </div>
 
+      {/* --- Notifications --- */}
       <div
         style={{
           marginTop: 10,
@@ -116,7 +150,21 @@ export function SettingsView({ user }: { user: any }) {
             type="checkbox"
             checked={notifTasks}
             onChange={(e) => setNotifTasks(e.target.checked)}
-            style={{ width: 20, height: 20 }}
+            style={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              width: "24px",
+              height: "24px",
+              borderRadius: "50%",
+              border: "1px solid #ccc",
+              cursor: "pointer",
+              display: "inline-block",
+              position: "relative",
+              backgroundColor: notifTasks ? "#0BA42C" : "transparent",
+              boxShadow: "-1px 2px 2px 0px #00000040 inset",
+              transition: "all 0.2s ease",
+            }}
           />
         </div>
 
@@ -132,10 +180,24 @@ export function SettingsView({ user }: { user: any }) {
         >
           <span>Сануулах</span>
           <input
-            type="checkbox"
-            checked={notifReminder}
             onChange={(e) => setNotifReminder(e.target.checked)}
-            style={{ width: 20, height: 20 }}
+            checked={notifReminder}
+            type="checkbox"
+            style={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              width: "24px",
+              height: "24px",
+              borderRadius: "50%",
+              border: "1px solid #ccc",
+              cursor: "pointer",
+              display: "inline-block",
+              position: "relative",
+              backgroundColor: notifReminder ? "#0BA42C" : "transparent",
+              boxShadow: "-1px 2px 2px 0px #00000040 inset",
+              transition: "all 0.2s ease",
+            }}
           />
         </div>
 

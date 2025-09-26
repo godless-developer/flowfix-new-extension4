@@ -130,7 +130,7 @@ export default function MiniDateCalendar({
                       opacity: isOutside ? 0.45 : 1,
                       border: isSelected
                         ? "2px solid #0BA42C"
-                        : "2px solid transparent",
+                        : "1px solid #ebebeb",
                       background:
                         isToday && !isSelected ? "#0BA42C" : "transparent",
                       color:
@@ -213,7 +213,8 @@ function ChevronRight() {
 const styles: Record<string, React.CSSProperties> = {
   container: {
     width: 320,
-    maxHeight: 310,
+    maxHeight: 320,
+    padding: "0px 4px",
     borderRadius: 16,
     border: "1px solid #0000001A",
     background: "#fff",

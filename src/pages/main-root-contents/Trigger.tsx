@@ -18,9 +18,8 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
   const [query, setQuery] = useState("");
 
   const { user, isLoading } = useUser();
-  console.log(user, isLoading, "from in trigger");
 
-  // Load saved position from localStorage (or default bottom-right)
+  // Load saved position from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("trigger-pos");
     if (saved) {
@@ -33,7 +32,7 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
     }
   }, []);
 
-  // Save position whenever it changes
+  // Save position
   useEffect(() => {
     if (position.x !== 0 && position.y !== 0) {
       localStorage.setItem("trigger-pos", JSON.stringify(position));
@@ -50,9 +49,7 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
       }
     };
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
+    const handleMouseUp = () => setIsDragging(false);
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
@@ -71,9 +68,8 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
         position: "fixed",
         top: position.y,
         left: position.x,
-        width: 248,
-        height: 128,
-        cursor: isDragging ? "grabbing" : "grab",
+        width: 310,
+        height: 160,
         borderRadius: "24px",
         border: "1px solid #FFFFFF66",
         padding: "16px",
@@ -89,109 +85,126 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
           : "triggerOut 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards",
         transformOrigin: "bottom right",
       }}
-      onMouseDown={(e) => {
-        if (!boxRef.current) return;
-        const rect = boxRef.current.getBoundingClientRect();
-        setIsDragging(true);
-        setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      }}
-      onClick={() => {
-        if (!isDragging && onClick) onClick();
-      }}
     >
-      {notification && (
-        <div
-          style={{
-            position: "absolute",
-            top: "-40px",
-            left: "50px",
-            width: "200px",
-          }}
-        >
-          <p
+      {/* 🟦 Drag handle (жижиг саарал background) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 16,
+          left: 16,
+          width: "60px",
+          height: "25px",
+          background: "#f6f6f6",
+          borderRadius: "50px",
+          cursor: isDragging ? "grabbing" : "grab",
+          marginBottom: "8px",
+        }}
+        onMouseDown={(e) => {
+          if (!boxRef.current) return;
+          const rect = boxRef.current.getBoundingClientRect();
+          setIsDragging(true);
+          setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+        }}
+      />
+
+      {/* 🟦 Content хэсэг → click болгож ашиглана */}
+      <div
+        style={{ flex: 1, width: "100%", textAlign: "center" }}
+        onClick={() => {
+          if (!isDragging && onClick) onClick();
+        }}
+      >
+        {notification && (
+          <div
             style={{
               position: "absolute",
-              top: 10,
-              left: 10,
-              color: "black",
-              fontSize: "14px",
-              zIndex: 200,
-              margin: 0,
+              top: "-40px",
+              left: "50px",
+              width: "200px",
             }}
           >
-            {notification
-              ? `⏰ ${notification.title} @ ${new Date(
-                  notification.datetime
-                ).toLocaleTimeString()}`
-              : "Norif here saw"}
-          </p>
-          <img
-            src={chrome.runtime.getURL("public/Union.png")}
-            alt="Open Popover"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "200px",
-              height: "auto",
-              objectFit: "cover",
-              zIndex: 100,
-            }}
-          />
-        </div>
-      )}
-      <div style={{ width: "100%", textAlign: "center" }}>
+            <p
+              style={{
+                position: "absolute",
+                top: 10,
+                left: 10,
+                color: "black",
+                fontSize: "14px",
+                margin: 0,
+                zIndex: 200,
+              }}
+            >
+              {notification
+                ? `⏰ ${notification.title} @ ${new Date(
+                    notification.datetime
+                  ).toLocaleTimeString()}`
+                : "Norif here saw"}
+            </p>
+            <img
+              src={chrome.runtime.getURL("public/Union.png")}
+              alt="Open Popover"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "200px",
+                height: "auto",
+                objectFit: "cover",
+                zIndex: 100,
+              }}
+            />
+          </div>
+        )}
         <img
           src={chrome.runtime.getURL(`${user?.buddyUrl}`)}
           alt="Open Popover"
           style={{
             width: "60px",
-            height: "82px",
-            objectFit: "cover",
+            height: "100px",
+            objectFit: "contain",
             marginBottom: "8px",
             pointerEvents: "none",
           }}
         />
-      </div>
-
-      <div
-        style={{
-          width: "90%",
-          height: "30px",
-          borderRadius: "40px",
-          position: "relative",
-          padding: "8px 12px",
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "white",
-          overflow: "hidden",
-        }}
-      >
-        <Search
+        <div
           style={{
-            position: "absolute",
-            left: 20,
-            top: "50%",
-            transform: "translateY(-50%)",
+            width: "90%",
+            height: "30px",
+            borderRadius: "40px",
+            position: "relative",
+            padding: "8px 12px",
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "white",
+            overflow: "hidden",
           }}
-          color="black"
-        />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Асуух зүйл байна уу?"
-          style={{
-            width: "100%",
-            height: "100%",
-            border: "none",
-            outline: "none",
-            paddingLeft: "40px",
-            fontSize: "14px",
-            color: "#000000cc",
-            background: "transparent",
-          }}
-        />
+        >
+          <Search
+            style={{
+              position: "absolute",
+              left: 20,
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+            color="black"
+          />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Асуух зүйл байна уу?"
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+              outline: "none",
+              paddingLeft: "40px",
+              fontSize: "14px",
+              color: "#000000cc",
+              background: "transparent",
+            }}
+          />
+        </div>
       </div>
 
       <style>{`

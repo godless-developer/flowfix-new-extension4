@@ -6,19 +6,23 @@ import React, { useState } from "react";
 const statusOptions = [
   { key: "active", label: "Оффис дээр байна", emoji: "👨‍💼" },
   { key: "remote", label: "Зайнаас ажиллаж байна", emoji: "🏠" },
-  { key: "onvacation", label: "Чөлөө авсан", emoji: "🏃" },
-  { key: "sick", label: "Өвчтэй", emoji: "🤒" },
 ];
 
 export function StatusDropdown() {
   const { updateUser, user } = useUser();
   const [open, setOpen] = useState(false);
 
+  // 🔥 Локал state — default нь office
+  const [selectedStatus, setSelectedStatus] = useState(
+    user?.status || "active"
+  );
+
   const selected =
-    statusOptions.find((opt) => opt.key === user?.status) || statusOptions[0];
+    statusOptions.find((opt) => opt.key === selectedStatus) || statusOptions[0];
 
   const handleSelect = (key: string) => {
-    updateUser({ status: key });
+    setSelectedStatus(key); // локал update → UI дээр шууд харагдана
+    updateUser({ status: key }); // backend рүү update явуулна
     setOpen(false);
   };
 
@@ -28,7 +32,7 @@ export function StatusDropdown() {
         position: "fixed",
         bottom: "20px",
         left: "20px",
-        width: "241px",
+        width: "281px",
         fontSize: "15px",
         zIndex: 1000,
       }}
@@ -41,11 +45,12 @@ export function StatusDropdown() {
           alignItems: "center",
           justifyContent: "space-between",
           background: "white",
-          borderRadius: "12px",
-          padding: "10px 16px",
+          borderRadius: "50px",
+          padding: "6px 16px",
           color: "black",
           cursor: "pointer",
           boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          position: "relative",
         }}
       >
         <span>
@@ -54,13 +59,41 @@ export function StatusDropdown() {
         <span
           style={{
             color: "black",
+            position: "relative",
+            width: "20px",
+            height: "20px",
           }}
         >
-          {open ? <ChevronDown /> : <ChevronUp />}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: open ? 1 : 0,
+              transition: "opacity 0.25s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ChevronUp size={18} />
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: open ? 0 : 1,
+              transition: "opacity 0.25s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ChevronDown size={18} />
+          </div>
         </span>
       </div>
 
-      {/* Dropdown list (dropup = дээш нээгдэнэ) */}
+      {/* Dropdown list */}
       {open && (
         <div
           style={{
@@ -74,6 +107,7 @@ export function StatusDropdown() {
             padding: "8px 0",
             color: "black",
             marginBottom: "8px",
+            animation: "fadeIn 0.25s ease forwards",
           }}
         >
           {statusOptions.map((opt) => (
@@ -87,21 +121,20 @@ export function StatusDropdown() {
                 padding: "10px 16px",
                 cursor: "pointer",
                 background:
-                  user?.status === opt.key
-                    ? "rgba(97, 138, 255, 0.1)"
-                    : "transparent",
+                  selectedStatus === opt.key ? "#f6f6f6" : "transparent",
               }}
             >
               <span>
                 {opt.emoji} {opt.label}
               </span>
-              {user?.status === opt.key && (
+              {selectedStatus === opt.key && (
                 <span
                   style={{
                     width: "14px",
+                    boxShadow: "-3px -3px 4px 0px #00000040 inset",
                     height: "14px",
+                    backgroundColor: "#0BA42C",
                     borderRadius: "50%",
-                    background: "linear-gradient(to right, #45c7fa, #c53de7)",
                     display: "inline-block",
                   }}
                 />
@@ -110,6 +143,14 @@ export function StatusDropdown() {
           ))}
         </div>
       )}
+
+      {/* fade animation keyframes */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

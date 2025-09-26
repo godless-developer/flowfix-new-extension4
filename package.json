@@ -2,10 +2,11 @@
   "name": "3m-found-extension",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "watch": "esbuild src/pages/index.tsx --bundle --outfile=content.bundle.js --minify --platform=browser --format=iife --global-name=mfound --inject:./esbuild.react-shim.js --watch",
-    "dev-server": "node dev-server.js",
-    "dev": "npm-run-all --parallel watch dev-server"
+    "build": "npm run build:content",
+    "build:content": "node esbuild.config.mjs prod",
+    "dev": "node esbuild.config.mjs dev"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -30,12 +31,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "chokidar": "^4.0.3",
     "esbuild": "^0.25.9",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5",
-    "ws": "^8.18.3"
+    "typescript": "^5"
   }
 }

@@ -1,13 +1,7 @@
 import { Expand, X } from "lucide-react";
 declare const chrome: any;
 
-export function MinimumChat({
-  setPopoverOpen,
-  setDialogOpen,
-}: {
-  setPopoverOpen: () => void;
-  setDialogOpen: () => void;
-}) {
+export function MinimumChat() {
   return (
     <div
       style={{
@@ -41,7 +35,6 @@ export function MinimumChat({
         }}
       >
         <button
-          onClick={setDialogOpen}
           style={{
             backgroundColor: "transparent",
             border: "none",
@@ -55,7 +48,6 @@ export function MinimumChat({
           <Expand strokeWidth={2.2} size={18} />
         </button>
         <button
-          onClick={setPopoverOpen}
           style={{
             backgroundColor: "transparent",
             border: "none",

@@ -34,7 +34,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 // ====== EDIT THESE ======
 const GOOGLE_CLIENT_ID =
   "345688677648-t0gkstp1i74m3m3rtibkdsbbvj0ua04q.apps.googleusercontent.com"; // from Google Cloud Console
-const API_BASE = "http://localhost:4000"; // e.g. https://api.yourdomain.com or http://localhost:4000
+const API_BASE = "https://flowfix-local-backend.onrender.com";
 // ========================
 
 function parseHashParams(url: string): Record<string, string> {
