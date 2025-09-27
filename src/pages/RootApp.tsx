@@ -10,7 +10,7 @@ import {
 import { createShadowHost, initToast } from "./utils";
 import App from "./App";
 import { Providers } from "@/provider/queryClientProvider";
-import { X } from "lucide-react";
+import { X, Shrink } from "lucide-react";
 import { Intro } from "./main-root-contents/Intro/Intro";
 import { AuthProvider, useAuth } from "@/api/login-context";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -79,10 +79,9 @@ export default function initExtension() {
                   style={{
                     position: "absolute",
                     top: 32,
-                    right: 32,
+                    right: 64,
                     borderRadius: "50%",
-                    width: 32,
-                    height: 32,
+                    gap: 16,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -91,7 +90,8 @@ export default function initExtension() {
                   }}
                   onClick={() => setStep("trigger")}
                 >
-                  <X size={30} color="#000" />
+                  <Shrink size={26} color="#000" />
+                  <X size={28} olor="#000" />
                 </div>
               ) : null
             }

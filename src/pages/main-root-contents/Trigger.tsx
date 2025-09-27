@@ -206,24 +206,6 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
           />
         </div>
       </div>
-
-      <style>{`
-        @keyframes triggerIn {
-          0%   { opacity: 0; transform: scale(0.6) translateY(40px); filter: blur(6px); }
-          25%  { opacity: 0.5; transform: scale(0.8) translateY(20px); filter: blur(3px); }
-          50%  { opacity: 0.9; transform: scale(1.05) translateY(-4px); filter: blur(0); }
-          75%  { opacity: 1; transform: scale(0.98) translateY(2px); filter: blur(0); }
-          100% { opacity: 1; transform: scale(1.0) translateY(0); filter: blur(0); }
-        }
-
-        @keyframes triggerOut {
-          0%   { opacity: 1; transform: scale(1.0) translateY(0); filter: blur(0); }
-          25%  { opacity: 0.8; transform: scale(0.95) translateY(10px); filter: blur(2px); }
-          50%  { opacity: 0.6; transform: scale(0.85) translateY(20px); filter: blur(4px); }
-          75%  { opacity: 0.3; transform: scale(0.75) translateY(30px); filter: blur(6px); }
-          100% { opacity: 0; transform: scale(0.6) translateY(40px); filter: blur(8px); }
-        }
-      `}</style>
     </div>
   );
 }

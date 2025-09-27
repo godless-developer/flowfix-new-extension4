@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Switch } from "./Switch";
 declare const chrome: any;
 
 const avatars = [
@@ -67,7 +68,7 @@ export function SettingsView({ user }: { user: any }) {
           onClick={handlePrev}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
-          <ChevronLeft size={32} />
+          <ChevronLeft size={24} strokeWidth={2} />
         </button>
 
         <div
@@ -100,20 +101,22 @@ export function SettingsView({ user }: { user: any }) {
           onClick={handleNext}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
-          <ChevronRight size={32} />
+          <ChevronRight size={24} strokeWidth={2} />
         </button>
       </div>
 
       <div
         style={{
           marginTop: 16,
-          padding: "6px 20px",
+          padding: "8px 20px",
           background: "#f9f9f9",
           border: "1px solid #e0e0e0",
           borderRadius: "24px",
           color: "black",
-          fontSize: "15px",
-          fontWeight: 500,
+          width: "190px",
+          fontSize: "16px",
+          fontWeight: 600,
+          textAlign: "center",
         }}
       >
         {buddyName}
@@ -122,110 +125,100 @@ export function SettingsView({ user }: { user: any }) {
       {/* --- Notifications --- */}
       <div
         style={{
-          marginTop: 10,
+          marginTop: 40,
           width: "100%",
           maxWidth: "90%",
           display: "flex",
           flexDirection: "column",
-          gap: "14px",
+          gap: "24px",
           color: "black",
         }}
       >
-        <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#333" }}>
+        <h3
+          style={{
+            fontSize: "16px",
+            fontWeight: 400,
+            color: "#7f7f7f",
+            margin: 0,
+          }}
+        >
           Мэдэгдлийн тохиргоо
         </h3>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 20px",
-            background: "#f6f6f6",
-            borderRadius: "24px",
-          }}
-        >
-          <span>Хийх зүйлийн мэдэгдэл</span>
-          <input
-            type="checkbox"
-            checked={notifTasks}
-            onChange={(e) => setNotifTasks(e.target.checked)}
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <div
             style={{
-              appearance: "none",
-              WebkitAppearance: "none",
-              MozAppearance: "none",
-              width: "24px",
-              height: "24px",
-              borderRadius: "50%",
-              border: "1px solid #ccc",
-              cursor: "pointer",
-              display: "inline-block",
-              position: "relative",
-              backgroundColor: notifTasks ? "#0BA42C" : "transparent",
-              boxShadow: "-1px 2px 2px 0px #00000040 inset",
-              transition: "all 0.2s ease",
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 20px",
-            background: "#f6f6f6",
-            borderRadius: "24px",
-          }}
-        >
-          <span>Сануулах</span>
-          <input
-            onChange={(e) => setNotifReminder(e.target.checked)}
-            checked={notifReminder}
-            type="checkbox"
-            style={{
-              appearance: "none",
-              WebkitAppearance: "none",
-              MozAppearance: "none",
-              width: "24px",
-              height: "24px",
-              borderRadius: "50%",
-              border: "1px solid #ccc",
-              cursor: "pointer",
-              display: "inline-block",
-              position: "relative",
-              backgroundColor: notifReminder ? "#0BA42C" : "transparent",
-              boxShadow: "-1px 2px 2px 0px #00000040 inset",
-              transition: "all 0.2s ease",
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 20px",
-            background: "#f6f6f6",
-            borderRadius: "24px",
-          }}
-        >
-          <span>Мэдэгдэл ирэх цаг</span>
-          <select
-            value={notifTime}
-            onChange={(e) => setNotifTime(e.target.value)}
-            style={{
-              border: "none",
-              background: "transparent",
-              outline: "none",
-              fontSize: "14px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 20px",
+              background: "#f6f6f6",
+              borderRadius: "999px",
+              border: "0.5px solid #e0e0e0",
             }}
           >
-            <option>5 мин өмнө</option>
-            <option>10 мин өмнө</option>
-            <option>15 мин өмнө</option>
-          </select>
+            <span style={{ fontSize: "16px", color: "black", opacity: 80 }}>
+              Хийх зүйлийн мэдэгдэл
+            </span>
+            <Switch />
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 20px",
+              border: "0.5px solid #e0e0e0",
+              background: "#f6f6f6",
+              borderRadius: "999px",
+            }}
+          >
+            <span style={{ fontSize: "16px", color: "black", opacity: 80 }}>
+              Сануулах
+            </span>
+            <Switch />
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "6px 6px 6px 20px",
+              border: "0.5px solid #e0e0e0",
+              background: "#f6f6f6",
+              borderRadius: "999px",
+            }}
+          >
+            <span style={{ fontSize: "16px", color: "black", opacity: 80 }}>
+              Мэдэгдэл ирэх цаг
+            </span>
+            <div
+              style={{
+                padding: "4px 8px",
+                border: "1px solid #e0e0e0",
+                background: "white",
+                borderRadius: "24px",
+              }}
+            >
+              <select
+                value={notifTime}
+                onChange={(e) => setNotifTime(e.target.value)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  fontSize: "14px",
+                  padding: "8px 4px",
+                }}
+              >
+                <option>5 мин өмнө</option>
+                <option>10 мин өмнө</option>
+                <option>15 мин өмнө</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>

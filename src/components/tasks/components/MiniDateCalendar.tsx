@@ -95,7 +95,7 @@ export default function MiniDateCalendar({
       </div>
 
       {/* Calendar body with animation */}
-      <div style={{ position: "relative", height: 260, overflow: "hidden" }}>
+      <div style={{ position: "relative", height: 300, overflow: "hidden" }}>
         <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={cursor.getMonth() + "-" + cursor.getFullYear()}
@@ -212,17 +212,19 @@ function ChevronRight() {
 /* --- Styles --- */
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    width: 320,
-    maxHeight: 320,
+    width: 361,
+    maxHeight: 372,
     padding: "0px 4px",
     borderRadius: 16,
     border: "1px solid #0000001A",
     background: "#fff",
     color: "#111",
-    boxShadow: "0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08)",
     fontFamily:
       '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans"',
     userSelect: "none",
+    display: "flex",
+    flexDirection: "column",
+    justifyItems: "center",
   },
   header: {
     display: "flex",
@@ -244,24 +246,24 @@ const styles: Record<string, React.CSSProperties> = {
   monthLabel: {
     flex: 1,
     textAlign: "center",
-    fontWeight: 600,
-    fontSize: 14,
+    fontSize: 16,
+    color: "black",
   },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(7, 1fr)",
     gap: 6,
-    padding: "8px",
+    padding: "12px",
   },
   cell: {
-    height: 36,
+    height: 40,
+    width: "auto",
     display: "grid",
     placeItems: "center",
     fontSize: 12,
   },
   dow: {
     color: "#3C454A99",
-    fontWeight: 600,
   },
   dayBtn: {
     appearance: "none",
@@ -272,7 +274,6 @@ const styles: Record<string, React.CSSProperties> = {
   },
   dayNum: {
     lineHeight: 1,
-    fontSize: 13,
-    fontWeight: 600,
+    fontSize: 14,
   },
 };

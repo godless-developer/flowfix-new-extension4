@@ -5,8 +5,9 @@ import Question from "../../components/message/Question";
 import { useUser } from "@/provider/userProvider";
 import { IMessage } from "@/components/message/components";
 import { SquarePen } from "lucide-react";
+import Notif from "../../components/notif/notif";
 
-type TabKey = "answer" | "tasks" | "office" | "settings";
+type TabKey = "answer" | "tasks" | "office" | "notif" | "settings";
 
 export function GeneralTab({
   shadow,
@@ -22,7 +23,7 @@ export function GeneralTab({
   const tabs: { key: TabKey; label: string; content: React.ReactNode }[] = [
     {
       key: "answer",
-      label: "AI туслах",
+      label: "Асуулт",
       content: (
         <Question
           shadow={shadow}
@@ -39,6 +40,11 @@ export function GeneralTab({
       ),
     },
     { key: "office", label: "Оффис", content: <Office user={user} /> },
+    {
+      key: "notif",
+      label: "Мэдэгдэл",
+      content: <Notif user={user} shadow={shadow} />,
+    },
     {
       key: "settings",
       label: "Тохиргоо",
@@ -141,26 +147,6 @@ export function GeneralTab({
 
   return (
     <div style={styles.root}>
-      {active === "answer" && (
-        <button
-          onClick={handleNewChat}
-          style={{
-            position: "absolute",
-            top: "4px",
-            left: "20px",
-            zIndex: 10,
-            padding: "7px 9px",
-            background: "#2600FFB2",
-            border: "none",
-            borderRadius: "100%",
-            color: "white",
-            fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          <SquarePen size={22} />
-        </button>
-      )}
       <div style={styles.tablistWrap}>
         <div role="tablist" aria-label="General tabs" style={styles.tablist}>
           {tabs.map((t, i) => {

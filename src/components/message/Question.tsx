@@ -129,27 +129,27 @@ export default function Question({
       {showDefaultQuestions && (
         <div
           style={{
-            padding: "40px 12px",
+            padding: "12px 12px",
             display: "flex",
             flexDirection: "column",
             alignItems: "start",
-            gap: "16px",
+            gap: "8px",
             flexWrap: "wrap",
           }}
         >
-          <h1 style={{ color: "#7f7f7f", fontSize: "16px" }}>
+          <p style={{ color: "#7f7f7f", fontSize: "16px", margin: 0 }}>
             Жишээ асуултууд:
-          </h1>
+          </p>
           {defaultQuestions.map((q) => (
             <button
               key={q}
               onClick={() => handleDefaultQuestionClick(q)}
               style={{
-                padding: "8px 12px",
+                padding: "10px 12px",
                 borderRadius: "20px",
-                border: "1px solid #0000001A",
+                border: "1px solid #0000001a",
                 background: "transparent",
-                color: "black",
+                color: "#6b7280",
                 cursor: "pointer",
                 fontSize: 14,
               }}

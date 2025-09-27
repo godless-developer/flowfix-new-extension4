@@ -46,15 +46,6 @@ export function ChatMessage({
           maxWidth: "80%",
         }}
       >
-        <img
-          src={chrome.runtime.getURL("public/blob.png")}
-          alt="avatar"
-          style={{
-            width: "18px",
-            height: "18px",
-            borderRadius: "50%",
-          }}
-        />
         <div
           style={{
             color: "#fff",
@@ -182,19 +173,6 @@ export function ChatMessage({
         animation: isLast ? "slideFadeIn 0.4s ease" : undefined,
       }}
     >
-      {!isUser && (
-        <img
-          src={chrome.runtime.getURL("public/blob.png")}
-          alt="avatar"
-          style={{
-            width: "18px",
-            height: "18px",
-            borderRadius: "50%",
-            marginBottom: "20px",
-          }}
-        />
-      )}
-
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
@@ -358,40 +336,6 @@ export function ChatMessage({
             }}
           />
         </div>
-
-        {!isUser && (
-          <div
-            style={{
-              display: "flex",
-              gap: "6px",
-              marginTop: "4px",
-              marginLeft: "8px",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                padding: "2px",
-                cursor: "pointer",
-              }}
-              onClick={() => likeHandleClick("up")}
-              hidden={message.thumbsDown}
-            >
-              <ThumbsUp size={14} fill={message.thumbsUp ? "white" : ""} />
-            </div>
-            <div
-              style={{
-                padding: "2px",
-                cursor: "pointer",
-                marginTop: "2px",
-              }}
-              onClick={() => likeHandleClick("down")}
-              hidden={message.thumbsUp}
-            >
-              <ThumbsDown size={14} fill={message.thumbsDown ? "white" : ""} />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

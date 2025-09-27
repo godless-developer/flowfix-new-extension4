@@ -127,6 +127,7 @@ export function Tasks({
                     gap: "8px",
                     cursor: "pointer",
                     flex: 1,
+                    position: "relative",
                   }}
                 >
                   <input
@@ -144,11 +145,12 @@ export function Tasks({
                       MozAppearance: "none",
                       width: "24px",
                       height: "24px",
+
                       borderRadius: "50%",
                       border: "1px solid #f6f6f6",
                       cursor: "pointer",
                       display: "inline-block",
-                      boxShadow: "-1px 2px 2px 0px #00000040 inset",
+                      boxShadow: "-1px 2px 2px 0px #00000018 inset",
                       position: "relative",
                       backgroundColor: isDone ? "#0BA42C" : "transparent",
                     }}
@@ -224,7 +226,7 @@ export function Tasks({
               flex: 1,
               border: "none",
               outline: "none",
-              fontSize: "14px",
+              fontSize: "15px",
               background: "transparent",
             }}
           />

@@ -3,13 +3,15 @@ import React, { useState, useRef, useEffect } from "react";
 
 export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
   const [text, setText] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLInputElement>(null);
+
+  const isActive = text.trim().length > 0;
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (text.trim() !== "") {
+    if (isActive) {
       onSend(text.trim());
-      setText("");
+      setText(""); // clear input after sending
     }
   };
 
@@ -21,7 +23,7 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
     }
   }, [text]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -41,80 +43,79 @@ export function ChatForm({ onSend }: { onSend: (message: string) => void }) {
         style={{
           position: "relative",
           display: "flex",
+          width: "80%",
           alignItems: "center",
           backgroundColor: "#F5F5F5",
-          borderRadius: "22px",
-          padding: "12px 45px 12px 40px",
+          borderRadius: "999px",
+          padding: "12px 45px 12px 50px",
         }}
       >
+        {/* Search Icon */}
         <div
           style={{
             position: "absolute",
-            left: 12,
-            bottom: 22,
+            left: 14,
+            bottom: 13,
             display: "flex",
             alignItems: "center",
             pointerEvents: "none",
             color: "#aaa",
           }}
         >
-          <Search size={20} strokeWidth={2.2} />
+          <Search size={24} strokeWidth={2.2} />
         </div>
-        <textarea
+
+        {/* Input */}
+        <input
           ref={textareaRef}
           placeholder="Асуух зүйл байна уу?"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          rows={1}
           style={{
             flex: 1,
-            resize: "none",
-            width: "100%",
+            width: "90%",
             minHeight: "24px",
             maxHeight: "100px",
             backgroundColor: "transparent",
             color: "black",
             border: "none",
             outline: "none",
-            fontSize: "14px",
+            fontSize: "15px",
             lineHeight: "20px",
-            overflowY: "auto",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
           }}
         />
 
+        {/* Send Button */}
         <button
           type="submit"
-          disabled={text.trim().length === 0}
+          disabled={!isActive}
           style={{
             position: "absolute",
-            right: 10,
-            bottom: 8,
-            background: "#2600FFB2",
-            width: "40px",
-            height: "40px",
-            borderRadius: "22px",
-            border: "none",
-            cursor: "pointer",
+            right: -65,
+            bottom: 1,
+            background: isActive ? "#2600FFB2" : "#f5f5f5",
+            width: "52px",
+            height: "52px",
+            borderRadius: "9999px",
+            border: isActive ? "0.5px solid #2600FFB2" : "0.5px solid #e5e5e5",
+            cursor: isActive ? "pointer" : "not-allowed",
             outline: "none",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            transition: "all 0.2s ease",
           }}
         >
-          <Send style={{ width: "16px", height: "16px", color: "white" }} />
+          <Send
+            style={{
+              width: "20px",
+              height: "20px",
+              color: isActive ? "white" : "#d1d5db",
+            }}
+          />
         </button>
       </div>
-
-      <style>
-        {`
-          textarea::-webkit-scrollbar {
-            display: none;
-          }
-        `}
-      </style>
     </form>
   );
 }

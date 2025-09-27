@@ -51,13 +51,13 @@ export function Popover({
           25%  { opacity: 0.7;  transform: translate(-50%, -50%) scale(0.90) translateY(22px); filter: blur(4px); }
           30%  { opacity: 0.8;  transform: translate(-50%, -50%) scale(0.94) translateY(16px); filter: blur(3px); }
           35%  { opacity: 0.85; transform: translate(-50%, -50%) scale(0.97) translateY(10px); filter: blur(2px); }
-          40%  { opacity: 0.9;  transform: translate(-50%, -50%) scale(1.02) translateY(4px);  filter: blur(1px); }
-          45%  { opacity: 0.95; transform: translate(-50%, -50%) scale(1.04) translateY(-2px); filter: blur(0); }
-          50%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.03) translateY(-4px); filter: blur(0); }
-          55%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.02) translateY(-3px); filter: blur(0); }
-          60%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(-1px); filter: blur(0); }
-          65%  { opacity: 1;    transform: translate(-50%, -50%) scale(0.99) translateY(1px);  filter: blur(0); }
-          70%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.01) translateY(-1px); filter: blur(0); }
+          40%  { opacity: 0.9;  transform: translate(-50%, -50%) scale(1.00) translateY(4px);  filter: blur(1px); }
+          45%  { opacity: 0.95; transform: translate(-50%, -50%) scale(1.00) translateY(4px); filter: blur(0); }
+          50%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(4px); filter: blur(0); }
+          55%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(3px); filter: blur(0); }
+          60%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(1px); filter: blur(0); }
+          65%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(1px);  filter: blur(0); }
+          70%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(1px); filter: blur(0); }
           75%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(0px);  filter: blur(0); }
           80%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(0px);  filter: blur(0); }
           85%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.00) translateY(0px);  filter: blur(0); }
