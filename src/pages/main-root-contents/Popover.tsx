@@ -25,6 +25,7 @@ export function Popover({
         left: "50%",
         paddingTop: 20,
         background: "white",
+        overflow: "hidden",
         borderRadius: 24,
         boxShadow:
           "0px 20px 40px rgba(0,0,0,0.25), -16px -16px 24px rgba(255,255,255,0.6) inset",
