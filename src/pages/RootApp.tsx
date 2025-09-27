@@ -108,7 +108,7 @@ export default function initExtension() {
             )}
           </Popover>
         )}
-        {step === "mini" && <MinimumChat />}
+        {/* {step === "mini" && <MinimumChat />} */}
 
         {step === "trigger" && (
           <Trigger
