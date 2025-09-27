@@ -91,7 +91,7 @@ export default function initExtension() {
                   onClick={() => setStep("trigger")}
                 >
                   <Shrink size={26} color="#000" />
-                  <X size={28} olor="#000" />
+                  <X size={28} color="#000" />
                 </div>
               ) : null
             }
