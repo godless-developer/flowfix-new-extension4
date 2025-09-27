@@ -34,7 +34,7 @@ export default function initExtension() {
     console.log("rootapp notif", notification);
     const [step, setStep] = useState<
       "intro" | "login" | "chooseName" | "main" | "trigger" | "mini"
-    >("mini");
+    >("intro");
 
     useEffect(() => {
       (async () => {
