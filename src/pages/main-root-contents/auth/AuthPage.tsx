@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function AuthPage({
   onLogin,
-  shuudLogin,
+  userNameLogin,
 }: {
   onLogin: () => void;
-  shuudLogin: () => void;
+  userNameLogin: (username: string, password: string) => void;
 }) {
   const [page, setPage] = useState<"signin" | "signup">("signin");
 
@@ -47,7 +47,9 @@ export function AuthPage({
           >
             <Login
               onLogin={onLogin}
-              shuudLogin={shuudLogin}
+              userNameLogin={(username, password) =>
+                userNameLogin(username, password)
+              }
               pageswitch={() => setPage("signup")}
             />
           </motion.div>

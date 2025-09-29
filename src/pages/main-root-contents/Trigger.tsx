@@ -1,23 +1,54 @@
 import { Search } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "../../provider/userProvider";
+import axios from "axios";
 
 declare const chrome: any;
 
 interface TriggerProps {
   onClick?: () => void;
   show?: boolean;
-  notification?: any | null;
 }
 
-export function Trigger({ onClick, show = true, notification }: TriggerProps) {
+export function Trigger({ onClick, show = true }: TriggerProps) {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [query, setQuery] = useState("");
+  const [latestNotif, setLatestNotif] = useState<string>(""); // ⬅️ одоо харуулах title
+  const [prevNotif, setPrevNotif] = useState<string>(""); // ⬅️ өмнөх title хадгалах
+  const [showNotif, setShowNotif] = useState(false);
 
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
+
+  const api = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  });
+
+  // 🟢 Fetch latest notification
+  const fetchLatestNotif = async () => {
+    try {
+      const res = await api.get("/notif/latest");
+      if (res.status === 200 && res.data?.title) {
+        const newTitle = res.data.title;
+
+        // өмнөхтэй адилхан бол харуулахгүй
+        if (newTitle !== prevNotif) {
+          setLatestNotif(newTitle);
+          setPrevNotif(newTitle);
+          setShowNotif(true);
+
+          // 5s дараа автоматаар алга болгоно
+          setTimeout(() => {
+            setShowNotif(false);
+          }, 5000);
+        }
+      }
+    } catch (e) {
+      console.error("Fetch latest notif failed:", e);
+    }
+  };
 
   // Load saved position from localStorage
   useEffect(() => {
@@ -39,6 +70,7 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
     }
   }, [position]);
 
+  // Drag events
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging) {
@@ -59,6 +91,13 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging, offset]);
+
+  // 🟢 5s тутам notif fetch
+  useEffect(() => {
+    fetchLatestNotif(); // эхний удаа
+    const interval = setInterval(fetchLatestNotif, 5000);
+    return () => clearInterval(interval);
+  }, [prevNotif]); // prevNotif-д хамааралтай
 
   return (
     <div
@@ -86,7 +125,7 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
         transformOrigin: "bottom right",
       }}
     >
-      {/* 🟦 Drag handle (жижиг саарал background) */}
+      {/* 🟦 Drag handle */}
       <div
         style={{
           position: "absolute",
@@ -107,20 +146,22 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
         }}
       />
 
-      {/* 🟦 Content хэсэг → click болгож ашиглана */}
+      {/* 🟦 Content */}
       <div
         style={{ flex: 1, width: "100%", textAlign: "center" }}
         onClick={() => {
           if (!isDragging && onClick) onClick();
         }}
       >
-        {notification && (
+        {/* 🟢 Notification Title */}
+        {showNotif && latestNotif && (
           <div
             style={{
               position: "absolute",
               top: "-40px",
               left: "50px",
               width: "200px",
+              transition: "opacity 0.5s ease",
             }}
           >
             <p
@@ -134,11 +175,7 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
                 zIndex: 200,
               }}
             >
-              {notification
-                ? `⏰ ${notification.title} @ ${new Date(
-                    notification.datetime
-                  ).toLocaleTimeString()}`
-                : "Norif here saw"}
+              ⏰ {latestNotif}
             </p>
             <img
               src={chrome.runtime.getURL("public/Union.png")}
@@ -155,6 +192,8 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
             />
           </div>
         )}
+
+        {/* 🟦 Buddy Image */}
         <img
           src={chrome.runtime.getURL(`${user?.buddyUrl}`)}
           alt="Open Popover"
@@ -166,6 +205,8 @@ export function Trigger({ onClick, show = true, notification }: TriggerProps) {
             pointerEvents: "none",
           }}
         />
+
+        {/* 🟦 Input */}
         <div
           style={{
             width: "90%",

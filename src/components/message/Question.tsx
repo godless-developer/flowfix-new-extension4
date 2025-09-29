@@ -2,11 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "@/provider/userProvider";
-import { sendMessageReq } from "@/api/messageRequest";
 import { v4 as uuidv4 } from "uuid";
 import { ChatForm, ChatMessage, IMessage } from "./components";
-
-declare const chrome: any;
+import { sendMessageReq } from "./components/sendMessageReq";
 
 export default function Question({
   compactMode = false,
@@ -36,16 +34,24 @@ export default function Question({
 
   const showDefaultQuestions = messages.length === 0;
 
+  // хадгалах
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem("chat_messages", JSON.stringify(messages));
     }
   }, [messages]);
 
+  // сэргээх
+  useEffect(() => {
+    const saved = localStorage.getItem("chat_messages");
+    if (saved) {
+      setMessages(JSON.parse(saved));
+    }
+  }, []);
+
   const sendMessage = async (text: string) => {
     const userMsg = { role: "user" as const, content: text };
-    const newMessages = [...messages, userMsg];
-    setMessages(newMessages);
+    setMessages((prev) => [...prev, userMsg]);
 
     setMessages((prev) => [
       ...prev,
@@ -107,10 +113,6 @@ export default function Question({
     });
   }, [messages, loading]);
 
-  const handleDefaultQuestionClick = (text: string) => {
-    sendMessage(text);
-  };
-
   return (
     <div
       style={{
@@ -143,7 +145,7 @@ export default function Question({
           {defaultQuestions.map((q) => (
             <button
               key={q}
-              onClick={() => handleDefaultQuestionClick(q)}
+              onClick={() => sendMessage(q)}
               style={{
                 padding: "10px 12px",
                 borderRadius: "20px",

@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getTasks({ userId }: { userId: string }) {
   try {
     const response = await axios.get(
-      `${process.env.API_BASE_URL}/tasks/${userId}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/${userId}`
     );
     return response.data;
   } catch (error: any) {
@@ -18,7 +18,7 @@ export async function getTasks({ userId }: { userId: string }) {
 export async function completeTask(userId: string, taskId: string) {
   try {
     const response = await axios.post(
-      `${process.env.API_BASE_URL}/tasks/completeTask`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/completeTask`,
       { userId, taskId }
     );
     return response.data;

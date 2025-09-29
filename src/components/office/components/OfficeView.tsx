@@ -1,4 +1,3 @@
-// OfficeView.tsx
 "use client";
 import { Crown, Mail, User } from "lucide-react";
 import React, { useState } from "react";
@@ -14,13 +13,15 @@ type Coordinate = {
 
 type Props = {
   coordinates: Coordinate[];
-  occupied: { [key: string]: { img: string; status?: string } };
+  occupied: { [key: string]: { img: string; status?: string; name?: string } };
   selectedChair: string | null;
   onChairClick: (chairId: string) => void;
   onSit: (chairId: string) => void;
   getUserInfo: (
     id: string
-  ) => { name: string; email: string; department?: string } | undefined;
+  ) =>
+    | { name: string; email: string; department?: string; status?: string }
+    | undefined;
 };
 
 export function OfficeView({
@@ -32,6 +33,11 @@ export function OfficeView({
   getUserInfo,
 }: Props) {
   const [hoveredUserId, setHoveredUserId] = useState<string | null>(null);
+
+  // Avatars list
+  const avatars = Array.from({ length: 16 }, (_, i) =>
+    chrome.runtime.getURL(`public/avatars/avatar${i + 1}.png`)
+  );
 
   const getStatusColor = (status?: string) => {
     switch (status) {
@@ -48,8 +54,15 @@ export function OfficeView({
     }
   };
 
+  // Status → Emoji map
+  const statusEmoji: Record<string, string> = {
+    active: "👨‍💼",
+    remote: "🏠",
+  };
+
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      {/* Background (same 4 images) */}
       <img
         src={chrome.runtime.getURL("public/officeSetup.png")}
         alt="Office Background"
@@ -68,7 +81,7 @@ export function OfficeView({
           width: "200px",
           objectFit: "contain",
           position: "absolute",
-          top: 70,
+          top: 90,
           left: -90,
         }}
       />
@@ -90,12 +103,12 @@ export function OfficeView({
           width: "200px",
           objectFit: "contain",
           position: "absolute",
-          top: 70,
+          top: 90,
           left: 200,
         }}
       />
 
-      {coordinates.map((coord) => {
+      {coordinates.map((coord, index) => {
         let chairImg = "";
         let rotation = "0deg";
 
@@ -120,6 +133,46 @@ export function OfficeView({
         const userData = occupied[coord.id];
         const userInfo = userData ? getUserInfo(coord.id) : null;
 
+        const randomNames = [
+          { name: "Tulgaa" },
+          { name: "Tsatsaa" },
+          { name: "Nandia" },
+          { name: "Khusle" },
+          { name: "Nomi" },
+          { name: "Boss" },
+          { name: "Khongor" },
+          { name: "Eddy" },
+          { name: "Nate" },
+          { name: "Bold" },
+          { name: "Ankhil" },
+          { name: "Tumur" },
+          { name: "Zulaaa" },
+          { name: "Tuka" },
+          { name: "Nandia" },
+          { name: "Khusle" },
+          { name: "Nomi" },
+          { name: "Boss" },
+          { name: "Khongor" },
+          { name: "Eddy" },
+          { name: "Nate" },
+          { name: "Bold" },
+          { name: "Ankhil" },
+          { name: "Tumur" },
+          { name: "Zulaaa" },
+          { name: "Tuka" },
+        ];
+
+        const displayName =
+          userInfo?.name || randomNames[index % randomNames.length].name;
+
+        // fallback avatar
+        const avatarImg = userData?.img || avatars[index % avatars.length];
+
+        // Use status-based emoji (active = 👨‍💼, remote = 🏠)
+        const iconEmoji = userInfo?.status
+          ? statusEmoji[userInfo.status]
+          : "👨‍💼";
+
         return (
           <div
             key={coord.id}
@@ -131,7 +184,32 @@ export function OfficeView({
               zIndex: 5,
             }}
           >
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative", textAlign: "center" }}>
+              {/* Name tag */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-12px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background:
+                    displayName === "Tulgaa" ? "#fff" : "rgba(0,0,0,0.7)",
+                  color: displayName === "Tulgaa" ? "#000" : "#fff",
+                  padding: "2px 6px",
+                  borderRadius: "198px",
+                  fontSize: "8px",
+                  whiteSpace: "nowrap",
+                  zIndex: 20,
+                  border: displayName === "Tulgaa" ? "1px solid #ddd" : "none",
+                }}
+              >
+                <span role="img" aria-label="icon">
+                  {iconEmoji}
+                </span>{" "}
+                {displayName}
+              </div>
+
+              {/* Chair */}
               <img
                 src={chairImg}
                 alt={`${coord.type} Chair`}
@@ -144,30 +222,27 @@ export function OfficeView({
                 onClick={() => onChairClick(coord.id)}
               />
 
-              {userData && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "-5px",
-                    left: "50%",
-                    width: "20px",
-                    height: "20px",
-                    transform: "translateX(-50%)",
-                  }}
-                  onMouseEnter={() => setHoveredUserId(coord.id)}
-                  onMouseLeave={() => setHoveredUserId(null)}
-                >
-                  <img
-                    src={userData.img}
-                    alt="Person"
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                      borderRadius: "50%",
-                      boxShadow: "0 0 4px rgba(0,0,0,0.3)",
-                    }}
-                  />
-                  {/* status dot */}
+              {/* Avatar */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-5px",
+                  left: "50%",
+                  width: "20px",
+                  height: "32px",
+                  transform: "translateX(-50%)",
+                }}
+                onMouseEnter={() => setHoveredUserId(coord.id)}
+                onMouseLeave={() => setHoveredUserId(null)}
+              >
+                <img
+                  src={avatarImg}
+                  alt="Avatar"
+                  style={{ width: "20px", height: "32px" }}
+                />
+
+                {/* Status dot */}
+                {userData && (
                   <div
                     style={{
                       position: "absolute",
@@ -180,9 +255,10 @@ export function OfficeView({
                       border: "1px solid white",
                     }}
                   />
-                </div>
-              )}
+                )}
+              </div>
 
+              {/* Tooltip */}
               {hoveredUserId === coord.id && userInfo && (
                 <div
                   style={{
@@ -201,37 +277,35 @@ export function OfficeView({
                 >
                   <div
                     style={{
-                      display: "flex ",
+                      display: "flex",
                       gap: "5px",
                       alignItems: "center",
                     }}
                   >
-                    <User size={12} />
-                    {userInfo.name}
+                    <User size={12} /> {userInfo.name}
                   </div>
                   <div
                     style={{
-                      display: "flex ",
+                      display: "flex",
                       gap: "5px",
                       alignItems: "center",
                     }}
                   >
-                    <Mail size={12} />
-                    {userInfo.email}
+                    <Mail size={12} /> {userInfo.email}
                   </div>
                   <div
                     style={{
-                      display: "flex ",
+                      display: "flex",
                       gap: "5px",
                       alignItems: "center",
                     }}
                   >
-                    <Crown size={12} />
-                    {userInfo.department}
+                    <Crown size={12} /> {userInfo.department}
                   </div>
                 </div>
               )}
 
+              {/* Sit button */}
               {selectedChair === coord.id && (
                 <div
                   style={{

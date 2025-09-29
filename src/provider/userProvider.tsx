@@ -36,7 +36,7 @@ type UserContextType = {
 const UserContext = createContext<UserContextType>({} as any);
 
 const api = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -118,49 +118,57 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateUser = async (updatedData: Partial<IUser>) => {
     try {
-      const { authToken } = await chrome.storage.local.get(["authToken"]);
-      if (!authToken) throw new Error("No auth token found");
+      const { user } = await chrome.storage.local.get(["user"]);
+      const userId = user?._id || user?.id; // ⬅️ аль нь байгааг ашиглана
+      if (!userId) throw new Error("User not found in storage");
 
-      const res = await api.put("/users/me", updatedData, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+      const res = await api.put(`/users/update/${userId}`, updatedData);
 
       if (res.status === 200) {
-        const updatedUser = res.data as IUser;
-
+        const updatedUser = res.data.user as IUser;
         await chrome.storage.local.set({ user: updatedUser });
         setCachedUser(updatedUser);
-
-        await refetch();
         return true;
       }
       return false;
     } catch (e) {
-      console.error("update /users/me failed", e);
+      console.error("update /users/update/:id failed", e);
       return false;
     }
   };
+
   const createTask = async (title: string, datetime: string) => {
     try {
-      const { authToken } = await chrome.storage.local.get(["authToken"]);
-      if (!authToken) throw new Error("No auth token found");
+      const { user } = await chrome.storage.local.get(["user"]);
+      const userId = user?._id || user?.id;
+      if (!userId) throw new Error("User not found in storage");
 
-      const res = await api.post(
-        "/users/me/tasks",
-        { title, datetime },
-        { headers: { Authorization: `Bearer ${authToken}` } }
-      );
+      const newTask = {
+        _id: Date.now().toString(), // түр ID өгнө
+        title,
+        datetime: new Date(datetime),
+        status: "PENDING" as const,
+      };
+
+      // API руу явуулна
+      const res = await api.put(`/users/update/${userId}`, {
+        $push: { tasks: newTask },
+      });
 
       if (res.status === 200) {
-        const updatedUser = res.data as IUser;
+        const updatedUser = res.data.user as IUser;
+
+        // cache + context update
         await chrome.storage.local.set({ user: updatedUser });
         setCachedUser(updatedUser);
-        await refetch();
+
         return true;
+      } else {
+        // API амжилтгүй бол local update хийхгүй
+        return false;
       }
-      return false;
     } catch (e) {
-      console.error("create task failed", e);
+      console.error("create task via /users/update/:id failed", e);
       return false;
     }
   };

@@ -4,13 +4,15 @@ declare const chrome: any;
 
 export function Login({
   onLogin,
-  shuudLogin,
+  userNameLogin,
   pageswitch,
 }: {
   onLogin: () => void;
-  shuudLogin: () => void;
+  userNameLogin: (username: string, password: string) => void;
   pageswitch: () => void;
 }) {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   return (
     <div
       style={{
@@ -75,6 +77,8 @@ export function Login({
       <input
         type="text"
         placeholder="Нэр"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         style={{
           width: "340px",
           padding: "12px 20px",
@@ -89,6 +93,8 @@ export function Login({
       <input
         type="password"
         placeholder="Нууц үг"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         style={{
           width: "340px",
           padding: "12px 20px",
@@ -113,7 +119,7 @@ export function Login({
           cursor: "pointer",
           boxShadow: "-3px -3px 4px 0px #00000040 inset",
         }}
-        onClick={shuudLogin}
+        onClick={() => userNameLogin(username, password)}
       >
         Нэвтрэх
       </button>

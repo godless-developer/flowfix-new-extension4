@@ -52,8 +52,9 @@ export function Intro({ onFinish }: { onFinish: () => void }) {
     >
       <div
         style={{
-          marginTop: current.bullets ? "30px" : "160px",
-          marginRight: current.bullets ? "200px" : "0px",
+          marginTop: current.bullets ? "30px" : "220px",
+          marginRight: current.bullets ? "400px" : "0px",
+          marginBottom: current.bullets ? "50px" : "0px",
           gap: current.bullets ? "20px" : "",
           textAlign: "center",
           display: current.bullets ? "flex" : "",
@@ -62,9 +63,10 @@ export function Intro({ onFinish }: { onFinish: () => void }) {
       >
         <StepBubble
           text={current.text}
-          bottom={current.bullets ? "30px" : "-10px"}
-          left={current.bullets ? "-15px" : "80px"}
-          rotate={current.bullets ? "90deg" : ""}
+          bottom={current.bullets ? "50px" : "170px"}
+          left={current.bullets ? "340px" : "330px"}
+          textLeft={current.bullets ? "370px" : "360px"}
+          union={current.bullets ? "union" : "none"}
         />
         <img
           src={chrome.runtime.getURL("/public/avatarr.png")}

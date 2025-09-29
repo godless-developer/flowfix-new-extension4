@@ -17,6 +17,20 @@ export function Tasks({
   const [title, setTitle] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [completed, setCompleted] = useState<{ [key: string]: boolean }>({});
+  const [localTasks, setLocalTasks] = useState<any[]>([]);
+
+  // Load tasks from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("tasks");
+    if (stored) {
+      setLocalTasks(JSON.parse(stored));
+    }
+  }, []);
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(localTasks));
+  }, [localTasks]);
 
   const handleAddTask = async () => {
     if (!selectedDate || !time || !title.trim()) {
@@ -36,8 +50,17 @@ export function Tasks({
       minutes
     );
 
+    const newTask = {
+      _id: Date.now().toString(),
+      title,
+      datetime: datetime.toISOString(),
+    };
+
+    // Save to server (if available)
     const success = await createTask(title, datetime.toISOString());
+
     if (success) {
+      setLocalTasks((prev) => [...prev, newTask]);
       setTitle("");
       setTime("");
       shadow.showToast("Амжилттай үүслээ!", {
@@ -50,10 +73,9 @@ export function Tasks({
   // Notification system
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!user?.tasks) return;
       const now = new Date();
 
-      const dueTask = user.tasks.find((task: any) => {
+      const dueTask = localTasks.find((task: any) => {
         const taskTime = new Date(task.datetime);
         const diff = taskTime.getTime() - now.getTime();
         return diff < 60 * 1000 && diff > 0;
@@ -61,7 +83,6 @@ export function Tasks({
 
       if (dueTask) {
         setNotification(dueTask);
-
         setTimeout(() => {
           setNotification(null);
         }, 5000);
@@ -69,13 +90,13 @@ export function Tasks({
     }, 30 * 1000);
 
     return () => clearInterval(interval);
-  }, [user?.tasks]);
+  }, [localTasks]);
 
   // Filter tasks by date
   const filteredTasks = useMemo(() => {
-    if (!selectedDate) return user?.tasks ?? [];
+    if (!selectedDate) return localTasks;
 
-    return (user?.tasks ?? []).filter((task: any) => {
+    return localTasks.filter((task: any) => {
       const taskDate = new Date(task.datetime);
       return (
         taskDate.getFullYear() === selectedDate.getFullYear() &&
@@ -83,7 +104,7 @@ export function Tasks({
         taskDate.getDate() === selectedDate.getDate()
       );
     });
-  }, [user?.tasks, selectedDate]);
+  }, [localTasks, selectedDate]);
 
   return (
     <div
@@ -145,7 +166,6 @@ export function Tasks({
                       MozAppearance: "none",
                       width: "24px",
                       height: "24px",
-
                       borderRadius: "50%",
                       border: "1px solid #f6f6f6",
                       cursor: "pointer",
@@ -155,7 +175,6 @@ export function Tasks({
                       backgroundColor: isDone ? "#0BA42C" : "transparent",
                     }}
                   />
-
                   <span
                     style={{
                       textDecoration: isDone ? "line-through" : "none",
@@ -189,7 +208,6 @@ export function Tasks({
           )}
         </div>
 
-        {/* Add task input */}
         {/* Add task input */}
         <div
           style={{
@@ -250,11 +268,11 @@ export function Tasks({
 
         <style>
           {`
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  `}
+            @keyframes fadeIn {
+              from { opacity: 0; transform: translateY(6px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+          `}
         </style>
       </div>
     </div>

@@ -1,5 +1,8 @@
-// esbuild.config.mjs
 import { build } from "esbuild";
+import * as dotenv from "dotenv";
+
+// 🟢 .env унших
+dotenv.config();
 
 const mode = process.argv[2] ?? "prod";
 const isDev = mode === "dev";
@@ -19,8 +22,13 @@ await build({
     "process.env.NODE_ENV": JSON.stringify(
       isDev ? "development" : "production"
     ),
-    "process.env.API_BASE_URL": JSON.stringify(
-      "https://flowfix-local-backend.onrender.com"
+
+    // 🟢 .env утгуудыг compile үе дээр орлуулна
+    "process.env.NEXT_PUBLIC_API_BASE_URL": JSON.stringify(
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    ),
+    "process.env.NEXT_PUBLIC_OPENAI_KEY": JSON.stringify(
+      process.env.NEXT_PUBLIC_OPENAI_KEY
     ),
   },
 });

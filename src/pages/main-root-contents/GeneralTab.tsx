@@ -12,9 +12,11 @@ type TabKey = "answer" | "tasks" | "office" | "notif" | "settings";
 export function GeneralTab({
   shadow,
   setNotification,
+  allNotifs,
 }: {
   shadow: any;
   setNotification: any;
+  allNotifs: any[];
 }) {
   const { user } = useUser();
   console.log(user);
@@ -43,7 +45,7 @@ export function GeneralTab({
     {
       key: "notif",
       label: "Мэдэгдэл",
-      content: <Notif user={user} shadow={shadow} />,
+      content: <Notif user={user} shadow={shadow} allNotifs={allNotifs} />,
     },
     {
       key: "settings",

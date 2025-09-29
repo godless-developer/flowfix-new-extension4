@@ -28,7 +28,7 @@ export const Bullets = ({ bullets }: { bullets: any[] }) => (
         >
           {item.number}
         </div>
-        <div style={{ marginBottom: "16px"}}>
+        <div style={{ marginBottom: "16px" }}>
           <strong
             style={{
               fontSize: "16px",

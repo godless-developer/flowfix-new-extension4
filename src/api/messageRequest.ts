@@ -8,7 +8,7 @@ export const sendMessageReq = async (message: string, user: IUser) => {
     console.log(token.sessionToken);
 
     const response = await axios.post(
-      `${process.env.API_BASE_URL}/api/chat`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat`,
       {
         content: message,
         user,
@@ -28,7 +28,7 @@ export const sendMessageReq = async (message: string, user: IUser) => {
 export const addQuestion = async (question: string) => {
   try {
     const response = await axios.post(
-      `${process.env.API_BASE_URL}/message/unanswered`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/message/unanswered`,
       { question }
     );
     return response.data.id;
@@ -39,7 +39,9 @@ export const addQuestion = async (question: string) => {
 
 export const deleteQuestion = async (id: string) => {
   try {
-    await axios.delete(`${process.env.API_BASE_URL}/message/from-mongo/${id}`);
+    await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/message/from-mongo/${id}`
+    );
   } catch (error) {
     console.log(error);
   }

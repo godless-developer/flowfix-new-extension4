@@ -3,19 +3,29 @@ import { GeneralTab } from "./main-root-contents";
 export default function App({
   shadow,
   setNotification,
+  allNotifs,
 }: {
   shadow: any;
   setNotification: any;
+  allNotifs: any[];
 }) {
-  return <MainApp shadow={shadow} setNotification={setNotification} />;
+  return (
+    <MainApp
+      shadow={shadow}
+      setNotification={setNotification}
+      allNotifs={allNotifs}
+    />
+  );
 }
 
 function MainApp({
   shadow,
   setNotification,
+  allNotifs,
 }: {
   shadow: any;
   setNotification: any;
+  allNotifs: any[];
 }) {
   return (
     <div
@@ -31,7 +41,11 @@ function MainApp({
         overflow: "hidden",
       }}
     >
-      <GeneralTab shadow={shadow} setNotification={setNotification} />
+      <GeneralTab
+        shadow={shadow}
+        setNotification={setNotification}
+        allNotifs={allNotifs}
+      />
     </div>
   );
 }

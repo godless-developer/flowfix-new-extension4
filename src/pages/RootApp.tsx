@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  Popover,
-  Trigger,
-  InitSelect,
-  AuthPage,
-  MinimumChat,
-} from "./main-root-contents";
+import { Popover, Trigger, InitSelect, AuthPage } from "./main-root-contents";
 import { createShadowHost, initToast } from "./utils";
 import App from "./App";
 import { Providers } from "@/provider/queryClientProvider";
@@ -15,6 +9,7 @@ import { Intro } from "./main-root-contents/Intro/Intro";
 import { AuthProvider, useAuth } from "@/api/login-context";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import axios from "axios";
 
 declare const chrome: any;
 
@@ -31,24 +26,36 @@ export default function initExtension() {
   const RootAppInner = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notification, setNotification] = useState<any | null>(null);
-    console.log("rootapp notif", notification);
+    const [allNotifs, setAllNotifs] = useState<any[]>([]); // ⬅️ бүх notification хадгалах state
     const [step, setStep] = useState<
       "intro" | "login" | "chooseName" | "main" | "trigger" | "mini"
     >("intro");
 
-    useEffect(() => {
-      (async () => {
-        const logged = await chrome.storage.local.get(["isLoggedIn"]);
-        if (logged.isLoggedIn) {
-          setIsLoggedIn(true);
-          setStep("main");
-        }
-      })();
-    }, []);
+    const api = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    });
 
-    const shuudLogin = async () => {
-      setIsLoggedIn(true);
-      setStep("chooseName");
+    // 🔥 Login with username
+    const userNameLogin = async (name: string, password: string) => {
+      try {
+        const res = await api.post("/users/login", { name, password });
+        if (res.status === 200) {
+          const { user } = res.data;
+
+          await chrome.storage.local.set({
+            user,
+            isLoggedIn: true,
+          });
+
+          setIsLoggedIn(true);
+          setStep("chooseName");
+        }
+      } catch (e: any) {
+        console.error("Username login failed:", e);
+        alert(
+          e?.response?.data?.message || "Username эсвэл password буруу байна"
+        );
+      }
     };
 
     const { loginWithGoogle } = useAuth();
@@ -62,6 +69,29 @@ export default function initExtension() {
         alert(e?.message || "Login failed");
       }
     };
+
+    // 🔥 All notifications fetch
+    const fetchAllNotifs = async () => {
+      try {
+        const res = await api.get("/notif/all");
+        if (res.status === 200) {
+          setAllNotifs(res.data); // ⬅️ backend-ээс ирсэн бүх notification-ууд
+        }
+      } catch (e) {
+        console.error("Fetch all notifications failed:", e);
+      }
+    };
+
+    useEffect(() => {
+      (async () => {
+        const logged = await chrome.storage.local.get(["isLoggedIn"]);
+        if (logged.isLoggedIn) {
+          setIsLoggedIn(true);
+          setStep("main");
+          fetchAllNotifs(); // ⬅️ login болсон үед бүх notif дуудах
+        }
+      })();
+    }, []);
 
     return (
       <Providers>
@@ -98,24 +128,22 @@ export default function initExtension() {
           >
             {step === "intro" && <Intro onFinish={() => setStep("login")} />}
             {step === "login" && (
-              <AuthPage onLogin={handleLogin} shuudLogin={shuudLogin} />
+              <AuthPage onLogin={handleLogin} userNameLogin={userNameLogin} />
             )}
             {step === "chooseName" && (
               <InitSelect onFinish={() => setStep("trigger")} />
             )}
             {step === "main" && (
-              <App shadow={shadow} setNotification={setNotification} />
+              <App
+                shadow={shadow}
+                setNotification={setNotification}
+                allNotifs={allNotifs} // ⬅️ App руу prop-оор дамжуулж байна
+              />
             )}
           </Popover>
         )}
-        {/* {step === "mini" && <MinimumChat />} */}
 
-        {step === "trigger" && (
-          <Trigger
-            onClick={() => setStep("main")}
-            notification={notification}
-          />
-        )}
+        {step === "trigger" && <Trigger onClick={() => setStep("main")} />}
       </Providers>
     );
   };

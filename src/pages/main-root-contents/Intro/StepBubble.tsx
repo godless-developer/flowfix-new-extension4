@@ -1,54 +1,63 @@
 import React from "react";
+declare const chrome: any;
 
 export const StepBubble = ({
   text,
   left,
   bottom,
-  rotate,
+  textLeft,
+  union,
 }: {
   text: React.ReactNode;
   bottom: string;
   left: string;
-  rotate: string;
+  textLeft: string;
+  union: string;
 }) => (
-  <div
-    style={{
-      position: "relative",
-      border: "1px solid #ddd",
-      borderRadius: "16px",
-      padding: "16px 20px",
-      justifyContent: "center",
-      alignItems: "center",
-      display: "inline-block",
-      marginBottom: "16px",
-      backgroundColor: "white",
-      width: "294px",
-      height: "55px",
-    }}
-  >
-    <div
-      style={{
-        position: "absolute",
-        bottom: bottom,
-        left: left,
-        width: 0,
-        height: 0,
-        borderLeft: "10px solid transparent",
-        borderRight: "10px solid transparent",
-        borderTop: "10px solid #ddd",
-        rotate: rotate,
-      }}
-    />
+  <>
+    {union === "union" ? (
+      <img
+        src={chrome.runtime.getURL("public/Union2.png")}
+        alt="Open Popover"
+        style={{
+          position: "absolute",
+          top: bottom,
+          left: left,
+          width: "300px",
+          height: "auto",
+          objectFit: "cover",
+          zIndex: 100,
+        }}
+      />
+    ) : (
+      <img
+        src={chrome.runtime.getURL("public/Union.png")}
+        alt="Open Popover"
+        style={{
+          position: "absolute",
+          top: bottom,
+          left: left,
+          width: "300px",
+          height: "auto",
+          objectFit: "cover",
+          zIndex: 100,
+        }}
+      />
+    )}
     <p
       style={{
+        position: "absolute",
+        top: bottom,
+        left: textLeft,
+        zIndex: 200,
         fontSize: "16px",
         fontWeight: 400,
         color: "#000000",
-        margin: "10px 0px ",
+        margin: "20px 0px",
         textAlign: "center",
       }}
     >
       {text}
     </p>
-  </div>
+  </>
 );

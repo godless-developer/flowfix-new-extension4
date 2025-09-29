@@ -58,10 +58,16 @@ export function AvatarSelect({
     >
       {/* Bubble */}
       <StepBubble
-        text="Намайг нэрлээд хүссэн дүрээ сонгоорой"
-        bottom="-10px"
-        left="20%"
-        rotate=""
+        text={
+          <>
+            Намайг нэрлээд хүссэн дүрээ
+            <br /> сонгоорой
+          </>
+        }
+        bottom="100px"
+        left="320px"
+        textLeft="350px"
+        union=""
       />
 
       {/* Avatar carousel */}
