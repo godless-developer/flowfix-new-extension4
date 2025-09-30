@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_KEY!; // ⚠️ зөвхөн туршилтад client-д
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_KEY!;
 
 export async function sendMessageReq(text: string, user: any) {
   try {

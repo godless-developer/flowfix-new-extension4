@@ -171,11 +171,12 @@ export function Trigger({ onClick, show = true }: TriggerProps) {
                 left: 10,
                 color: "black",
                 fontSize: "14px",
+                fontWeight: 600,
                 margin: 0,
                 zIndex: 200,
               }}
             >
-              ⏰ {latestNotif}
+              {latestNotif}
             </p>
             <img
               src={chrome.runtime.getURL("public/Union.png")}

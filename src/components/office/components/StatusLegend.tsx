@@ -75,7 +75,7 @@ export function StatusDropdown() {
               justifyContent: "center",
             }}
           >
-            <ChevronUp size={18} />
+            <ChevronDown size={18} />
           </div>
           <div
             style={{
@@ -88,7 +88,7 @@ export function StatusDropdown() {
               justifyContent: "center",
             }}
           >
-            <ChevronDown size={18} />
+            <ChevronUp size={18} />
           </div>
         </span>
       </div>

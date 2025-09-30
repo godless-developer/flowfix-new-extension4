@@ -34,7 +34,7 @@ export function Office({ user }: { user: any }) {
         zoomAnimation={{ animationTime: 300 }}
         minScale={1.32}
         maxScale={5}
-        initialScale={3} // scale багаас эхлүүлвэл илүү зөөлөн drag хийнэ
+        initialScale={2.4} // scale багаас эхлүүлвэл илүү зөөлөн drag хийнэ
         limitToBounds={false}
         centerOnInit={true}
         centerZoomedOut={false}

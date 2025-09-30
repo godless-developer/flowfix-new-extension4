@@ -189,15 +189,18 @@ export function OfficeView({
               <div
                 style={{
                   position: "absolute",
-                  top: "-12px",
+                  top: "-22px",
                   left: "50%",
                   transform: "translateX(-50%)",
                   background:
                     displayName === "Tulgaa" ? "#fff" : "rgba(0,0,0,0.7)",
                   color: displayName === "Tulgaa" ? "#000" : "#fff",
-                  padding: "2px 6px",
-                  borderRadius: "198px",
+                  padding: "4px 4px",
+                  borderRadius: "18px",
                   fontSize: "8px",
+                  margin: "0 auto",
+                  display: "flex",
+                  alignItems: "center",
                   whiteSpace: "nowrap",
                   zIndex: 20,
                   border: displayName === "Tulgaa" ? "1px solid #ddd" : "none",
@@ -205,8 +208,10 @@ export function OfficeView({
               >
                 <span role="img" aria-label="icon">
                   {iconEmoji}
-                </span>{" "}
-                {displayName}
+                </span>
+                <p style={{ margin: 0, letterSpacing: "0.5px" }}>
+                  {displayName}
+                </p>
               </div>
 
               {/* Chair */}

@@ -6,7 +6,7 @@
 
 html,
 body {
-  font-family: "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif !important;
+  font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
   letter-spacing: 1px;
 }
