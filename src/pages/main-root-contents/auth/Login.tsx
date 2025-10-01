@@ -132,9 +132,7 @@ export function Login({
           color: "#00000099",
         }}
         onClick={pageswitch}
-      >
-        Бүртгүүлэх
-      </p>
+      ></p>
     </div>
   );
 }

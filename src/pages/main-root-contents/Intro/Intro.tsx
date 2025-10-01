@@ -65,14 +65,14 @@ export function Intro({ onFinish }: { onFinish: () => void }) {
           text={current.text}
           bottom={current.bullets ? "50px" : "170px"}
           left={current.bullets ? "340px" : "330px"}
-          textLeft={current.bullets ? "370px" : "360px"}
+          textLeft={current.bullets ? "360px" : "350px"}
           union={current.bullets ? "union" : "none"}
         />
         <img
           src={chrome.runtime.getURL("/public/avatarr.png")}
           alt="Frog"
           width="100"
-          height="140"
+          height="150"
           style={{ display: "block", margin: "0 auto" }}
         />
       </div>

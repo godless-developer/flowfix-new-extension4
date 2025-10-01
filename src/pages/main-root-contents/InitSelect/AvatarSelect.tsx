@@ -65,7 +65,7 @@ export function AvatarSelect({
           </>
         }
         bottom="100px"
-        left="320px"
+        left="330px"
         textLeft="350px"
         union=""
       />

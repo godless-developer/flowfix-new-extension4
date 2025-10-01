@@ -129,11 +129,11 @@ export function Trigger({ onClick, show = true }: TriggerProps) {
       <div
         style={{
           position: "absolute",
-          top: 16,
-          left: 16,
+          top: 6,
+          left: "41%",
           width: "60px",
-          height: "25px",
-          background: "#f6f6f6",
+          height: "15px",
+          background: "#9b9898ff",
           borderRadius: "50px",
           cursor: isDragging ? "grabbing" : "grab",
           marginBottom: "8px",
@@ -145,7 +145,6 @@ export function Trigger({ onClick, show = true }: TriggerProps) {
           setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         }}
       />
-
       {/* 🟦 Content */}
       <div
         style={{ flex: 1, width: "100%", textAlign: "center" }}
@@ -202,6 +201,7 @@ export function Trigger({ onClick, show = true }: TriggerProps) {
             width: "60px",
             height: "100px",
             objectFit: "contain",
+            marginTop: "10px",
             marginBottom: "8px",
             pointerEvents: "none",
           }}
@@ -228,7 +228,7 @@ export function Trigger({ onClick, show = true }: TriggerProps) {
               top: "50%",
               transform: "translateY(-50%)",
             }}
-            color="black"
+            color="#434141cc"
           />
           <input
             type="text"
