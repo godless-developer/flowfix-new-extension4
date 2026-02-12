@@ -1,10 +1,4 @@
-3M-Found-Extension
-✨🚀 3M Found - Chrome Extension & Platform 🚀✨
-📌 Overview
-3M Found is a Chrome Extension + Web platform designed to elevate
-internal communication within organizations. It simplifies information
-exchange between HR and employees, structures the onboarding process,
-and provides a clear overview of employee statuses and organizational insights.
+
 🎯 Main Goals
 
 🤝 Simplify communication and information exchange between HR and employees
@@ -22,12 +16,6 @@ Web Platform (Next.js / React)
 Backend API (Node.js / Express.js)
 Database (MongoDB / Pinecone)
 GitLab/GitHub CI/CD (Deployment & Version Control)
-
-💡 Vision
-"3M Found" aims to streamline daily communication, onboarding, and HR management
-within organizations by bringing everything into a centralized, simple, and effective platform 🚀
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ### Chrome Extension: Getting Started in Developer Mode
 
@@ -78,6 +66,3 @@ For more details, refer to the [Chrome Extension Publishing Guide](https://devel
 
 # flowfix-new-extension
 
-# flowfix-new-extension
-# flowfix-new-extension2
-# flowfix-new-extension4
